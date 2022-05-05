@@ -59,6 +59,10 @@ pool.connect(err => {
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Willow' });
 });
+
+router.get('/about', (req, res) => {
+  res.render('about', { title: 'About' });
+});
 	
 router.get('/users', (req, res) => {
 	res.json(users)

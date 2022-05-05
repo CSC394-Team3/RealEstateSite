@@ -10,7 +10,7 @@ const pg = require('pg')
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Set the view engine for the express app  
-app.set("view engine", "jade")
+app.set("view engine", "pug")
 var current_username = "";
 var current_realtorID = -1;
 var realtor = true;
@@ -37,24 +37,20 @@ if (process.env.DATABASE_URL != null){
 
 else{
    connectionParams = {
-	host: 'willowrealestate.postgres.database.azure.com',
-    user: 'team5',
-    password: 'Willow5!',
-    database: 'postgres',
-    port: 5432,
-    ssl: true
+	user: 'team3_user',
+   	host: 'localhost',
+  	database: 'team3',
+  	password: 'team3pass',
+  	port: 5432
   }
 }
 
 console.log(connectionParams)
 const pool = new pg.Client(connectionParams)
+<<<<<<< Updated upstream
 
-pool.connect(err => {
-    if (err) throw err;
-    else {
-        console.log("connection error")
-    }
-});
+=======
+>>>>>>> Stashed changes
  
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Willow' });

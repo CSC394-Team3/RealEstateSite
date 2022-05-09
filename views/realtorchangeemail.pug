@@ -1,0 +1,14 @@
+doctype html
+
+html
+
+	body
+		h1 Change Email 
+		
+		form(action = "/realtorchangeemail", method = "post") 
+			div.input
+				span.label New Email
+				input(type = "text", name = "email")
+				
+			div.actions 
+				input(type = "submit", name = "action" , value = "done")

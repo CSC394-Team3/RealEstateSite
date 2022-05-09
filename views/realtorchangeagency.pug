@@ -1,0 +1,14 @@
+doctype html
+
+html
+
+	body
+		h1 Change Agency !
+		
+		form(action = "/realtorchangeagency", method = "post") 
+			div.input
+				span.label New Agency
+				input(type = "text", name = "agency")
+				
+			div.actions 
+				input(type = "submit", name = "action" , value = "done")

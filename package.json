@@ -19,9 +19,15 @@
   },
   "homepage": "https://github.com/hdjokic/Team3#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.0",
+    "env": "^0.0.2",
     "express": "^4.17.3",
-    "jade": "^1.11.0",
-    "pg": "^8.7.3"
+    "express-basic-auth": "^1.2.1",
+    "index.js": "^0.0.3",
+    "node-postgres": "^0.6.2",
+    "pg": "^8.7.3",
+    "pug": "^3.0.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

@@ -1,0 +1,14 @@
+doctype html
+
+html
+	head
+	title Register
+	
+	body
+		h1 Please enter choose your account type:
+		
+		form(action="/register",method="post")
+			div.actions
+				input(type = "submit", name = "action", value = "customer")
+				input(type = "submit", name = "action" , value = "realtor")
+

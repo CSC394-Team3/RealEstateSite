@@ -1,0 +1,14 @@
+doctype html
+
+html
+
+	body
+		h1 Change Phone Numer 
+		
+		form(action = "/customerchangephoneno", method = "post") 
+			div.input
+				span.label New Phone Number
+				input(type = "text", name = "phoneno")
+				
+			div.actions 
+				input(type = "submit", name = "action" , value = "done")

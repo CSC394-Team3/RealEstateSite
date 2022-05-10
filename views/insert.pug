@@ -29,8 +29,20 @@ body
 			input(type="text", name="num_bathroom")
  
 		div.input
-			span.label Address ID
-			input(type="text", name="addressID")
+			span.label Street Address
+			input(type="text", name="street")
+			
+		div.input
+			span.label City
+			input(type="text", name="city")
+			
+		div.input
+			span.label State
+			input(type="text", name="state")
+			
+		div.input
+			span.label Zip
+			input(type="text", name="zip")
 
 		div.actions
 			input(type="submit",name="action", value="add")
@@ -47,6 +59,10 @@ body
 				td Size (sq ft)
 				td Number of Bedroom
 				td Number of Bathroom 
+				td Street
+				td City
+				td State
+				td Zip
 		tbody
 			each property in properties
 				tr 
@@ -55,3 +71,7 @@ body
 					td #{property.size}
 					td #{property.num_bedroom}
 					td #{property.num_bathroom}  
+					td #{property.street}
+					td #{property.city}
+					td #{property.state}
+					td #{property.zip}

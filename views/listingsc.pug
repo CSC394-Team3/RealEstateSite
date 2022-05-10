@@ -1,0 +1,42 @@
+doctype html
+
+html
+
+	body
+		h1 Customer Listings 
+		
+		form(action = "/listingsc", method = "post")
+			div.actions
+				input(type = "submit", name = "action" , value = "crud")
+				input(type = "submit", name = "action" , value = "change password")
+				input(type = "submit", name = "action" , value = "change phone number")
+				input(type = "submit", name = "action" , value = "change email")
+				input(type = "submit", name = "action" , value = "change agency")
+				input(type = "submit", name = "action" , value = "go to listings")
+	br
+
+	table
+		thead
+			tr
+				td Type
+				td Price
+				td Size (sq ft)
+				td Number of Bedroom
+				td Number of Bathroom 
+				td Street
+				td City
+				td State
+				td Zip
+		tbody
+			each property in properties
+				tr 
+					td #{property.propertytype}
+					td #{property.price}
+					td #{property.size}
+					td #{property.num_bedroom}
+					td #{property.num_bathroom}  
+					td #{property.street}
+					td #{property.city}
+					td #{property.state}
+					td #{property.zip} 
+

@@ -3,7 +3,7 @@ doctype html
 html
 
 	body
-		h1 Welcome #{name} !
+		h1	Realtor Listings
 		
 		form(action = "/listingsr", method = "post")
 			div.actions
@@ -14,22 +14,29 @@ html
 				input(type = "submit", name = "action" , value = "change agency")
 				input(type = "submit", name = "action" , value = "go to listings")
 	br
-	
+
 	table
 		thead
 			tr
-				td Realtor ID
-				td First Name
-				td Last Name
-				td Agency
-				td Phone Number
-				td Email 
-		tbody  
-			tr 
-				td #{realtor.realtorid}
-				td #{realtor.first_name}
-				td #{realtor.last_name}
-				td #{realtor.agency}
-				td #{realtor.phone_number}
-				td #{realtor.email}  
+				td Type
+				td Price
+				td Size (sq ft)
+				td Number of Bedroom
+				td Number of Bathroom 
+				td Street
+				td City
+				td State
+				td Zip
+		tbody
+			each property in properties
+				tr 
+					td #{property.propertytype}
+					td #{property.price}
+					td #{property.size}
+					td #{property.num_bedroom}
+					td #{property.num_bathroom}  
+					td #{property.street}
+					td #{property.city}
+					td #{property.state}
+					td #{property.zip}
 

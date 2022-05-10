@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Set the view engine for the express app  
 app.set("view engine", "pug")
 var current_username = "";
-var current_realtorID = -1;
+var current_realtorID = 2;
 var addressID 
 var realtor = true;
 
@@ -83,11 +83,9 @@ router.post('/insert', (req, res) => {
 		var addAddress = `INSERT INTO address (street, city, state, zip) VALUES ( '${req.body.street}', '${req.body.city}', '${req.body.state}', '${req.body.zip}' ) ON conflict do nothing RETURNING addressID ` 
 		
 		pool.query(addAddress, (err,result) => {
-			if(err) {
-				console.log(err,result)
-			}else if(result.rows.length > 1) {
+			 if(result.rows.length > 0) {
 				addressID = result.rows[0].addressid 
-				
+				console.log(err,result)
 				var insertProperty = `INSERT INTO property (propertyType, price, size, num_bedroom, num_bathroom,realtorID, addressID) VALUES ('${req.body.propertytype}', '${req.body.price}','${req.body.size}','${req.body.num_bedroom}','${req.body.num_bathroom}','${current_realtorID}', '${addressID}')`
 			
 					pool.query(insertProperty, (err, result) => {

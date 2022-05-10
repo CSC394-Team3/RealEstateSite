@@ -1,9 +1,9 @@
 /* image banner */
-.image_banner {
+.header-background {
   background: url(willowcity_banner.jpeg);
   background-size: cover;
   height: 500px ; 
-  background-position: 20% 100%;
+  background-position: 10% 50%;
   overflow: hidden;
 }
 
@@ -94,8 +94,4 @@ h2{
 p{
     font-family: Geneva;
     
-<<<<<<< Updated upstream
 }
-=======
-}
->>>>>>> Stashed changes

@@ -7,35 +7,43 @@ html
       
       // stylesheet
       link(href='index_style.css', rel = 'stylesheet')
-      
-      
+      link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css')
+
+    
     // Header
-    .header
-      img(src='Logo_banner.png', style='display: block; margin-right: auto;  width: 10%;')
-      .header-right
-        a.active(href='#home') Home
+    .header(class="col-lg-12")
+      .header-background
+      img(src='Logo_banner.png', style='display: block; margin-right: auto;  width: 30%;')
+      .header-right(class="row")
+        a(href='#home') Home
         a(href='#contact') Contact
         a(href='#about') About
         a(href='#login') Login
         a(href='#faq') FAQ
         a(href='#contact') Contact
-        
-    // image banner
-    .image_banner
-      a.text_banner Find your dream home today
-    
-    body
-        p(style='text-align:center;') Please choose a login option:
-        form(action='/login', method='post', style='margin: auto; width: 150px;')
-          div.actions
-            input(type='submit', name='action', value='customer')
-            input(type='submit', name='action', value='realtor')
-            
-        p(style='text-align:center;') Or sign up here: 
-        form(action='/register', method='post', style='margin: auto; width: 150px;')
-          div.actions
-            input(type='submit', name='action', value='customer')
-            input(type='submit', name='action', value='realtor')
-            
+
+    //- // image banner
+    //- .image_banner
+
+    //- div(class="row")
+    //-   img(src='Logo_banner.png', class="img-fluid" )
+    //-   .image_banner
+  
+
+    .body(class="row")
+      div(class="col-lg-6")
+        div(class="col-lg-3")
+          p(style='text-align:center;') Login:
+          form(action='/login', method='post', style='margin: auto; width: 150px;')
+            div.actions
+              input(type='submit', name='action', value='customer', class="btn btn-secondary")
+              input(type='submit', name='action', value='realtor', class="btn btn-secondary")
+        div(class="col-lg-3")
+          p(style='text-align:center;') Or sign up: 
+          form(action='/register', method='post', style='margin: auto; width: 150px;')
+            div.actions
+              input(type='submit', name='action', value='customer', class="btn btn-secondary")
+              input(type='submit', name='action', value='realtor', class="btn btn-secondary")
+              
     .footer
-      p  Footer 
+      p   

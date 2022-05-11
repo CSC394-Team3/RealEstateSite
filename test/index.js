@@ -14,7 +14,7 @@ describe('The express server', function () {
         });
     });
 
-    it('should render html for the root path', function (done) {
+    it('should render pug for the root path', function (done) {
         
         request(server)
             .get('/')

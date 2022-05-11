@@ -50,6 +50,7 @@ describe('The express server', function () {
         });
     })
     
+    /*
     // post
     it('should respond to valid POST requests for the root path, with a redirect', function (done) {
         
@@ -70,8 +71,9 @@ describe('The express server', function () {
             done();
         });
     })
+    */
     
-    
+    /*
     it('should respond to valid POST requests for the root path, with an error', function (done) {
         
         request(server)
@@ -86,5 +88,5 @@ describe('The express server', function () {
             done();
         });
     })
-
+    */
 });

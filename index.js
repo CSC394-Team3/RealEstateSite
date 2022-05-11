@@ -482,6 +482,8 @@ router.post('/customerchangephoneno', (req,res) => {
 	
 })
 
+module.exports = app;
+
 /*
 app.use('/',router);
 app.listen(port, () => {

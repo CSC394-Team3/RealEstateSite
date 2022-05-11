@@ -14,11 +14,11 @@ describe('The express server', function () {
         });
     });
 
-    it('should render html for the root path', function (done) {
+    it('should render jade for the root path', function (done) {
         
         request(server)
-            .get('/')
-            .expect('Content-Type', /html/)
+            .get('/insert')
+            .expect('Content-Type', /jade/)
             .expect(200, function(err, res) {
                 if (err) { return done(err); }
             
@@ -50,16 +50,16 @@ describe('The express server', function () {
         });
     })
     
-    /*
+    
     // post
     it('should respond to valid POST requests for the root path, with a redirect', function (done) {
         
         request(server)
             .post('/')
-            .send({
+            /*.send({
                 "first_name": "test",
                 "last_name": "test"
-            })
+            })*/
             .expect(302)
             .expect('Location', '/')
             .end(done);
@@ -71,22 +71,6 @@ describe('The express server', function () {
             done();
         });
     })
-    */
     
-    /*
-    it('should respond to valid POST requests for the root path, with an error', function (done) {
-        
-        request(server)
-            .post('/')
-            .expect(400)
-            .end(done);
-                
-    });
-
-    after(function(done) {
-        app.close(function() {
-            done();
-        });
-    })
-    */
+    
 });

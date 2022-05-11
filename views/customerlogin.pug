@@ -2,10 +2,37 @@ doctype html
    
 html
 	head 
+	style.
+		body{
+			background-image: url("2473757.jpg");
+		
+		}
+		input[type="submit"] {
+				display: block; 
+				padding: 7px 14px;
+			}
+		input[type=text], input[type=password] {
+			width: 25%; 
+			margin: 11px 0;
+			display: inline-block;
+			border: 1px solid #ccc;
+			box-sizing: border-box;
+			padding: 7px 14px;
+			border-radius: 25px;
+		} 
+		
+		h1{
+			 font-family: Arial, Helvetica, sans-serif;
+			 text-align: left;
+			 margin: 0 0 2rem;
+		}
+		 
 	title Login
-	
+	link(rel = 'stylesheet' , href = '/css/bootstrap.min.css')
+	link(rel = 'stylesheet' , href = '/css/styles.css')
+	  
 	body 
-		h1 Please enter login info
+		h1 Please Login Customer
 	
 		form(action="/customerlogin", method="post")
 			div.input
@@ -17,5 +44,5 @@ html
 				input(type = "password", name = "password")
 
 			div.actions
-				input(type = "submit", name = "action", value = "login")
-				input(type = "submit", name = "action", value = "register")
+				input( class="btn btn-lg btn-primary btn-block", type = "submit", name = "action", value = "login")
+				//input(type = "submit", name = "action", value = "register")

@@ -1,15 +1,30 @@
 doctype html
 
 html
-
+	head
+	
+	link(rel = 'stylesheet' , href = '/css/bootstrap.min.css')
+	link(rel = 'stylesheet' , href = '/css/styles.css')
+	
+	style.
+		body{
+			background-image: url("2473757.jpg");
+		}
+		
+		input[type=submit] {
+		  border-radius: 25px;
+		  
+		}
+		
 	body
 		h1 Welcome #{name} !
 		
 		form(action = "/customerpanel", method = "post")
 			div.actions 
-				input(type = "submit", name = "action" , value = "change password") 
-				input(type = "submit", name = "action" , value = "change email")  
-				input(type = "submit", name = "action" , value = "change phone number")  
+				input(class="btn btn-md btn-primary btn-block", type = "submit", name = "action" , value = "change password") 
+				input(class="btn btn-md btn-primary btn-block", type = "submit", name = "action" , value = "change email")  
+				input(class="btn btn-md btn-primary btn-block", type = "submit", name = "action" , value = "change phone number") 
+				input(class="btn btn-md btn-primary btn-block", type = "submit", name = "action" , value = "go to listings")
 				
 	br
 	

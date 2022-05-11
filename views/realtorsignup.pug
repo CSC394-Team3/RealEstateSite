@@ -1,6 +1,55 @@
 doctype html
 
-html 
+html  
+	head
+	
+	link(rel = 'stylesheet' , href = '/css/bootstrap.min.css')
+	link(rel = 'stylesheet' , href = '/css/styles.css')
+	
+	style. 
+		form {
+			border: 3px solid #f1f1f1;
+		}
+		h1 {text-align: center;}
+		body {
+			font-family: Arial, Helvetica, sans-serif;
+			color: black;
+			margin        : 0;
+			padding       : 0;
+			display       : grid;
+			place-content : center;
+			min-height    : 100vh;
+			background-image: url("2473757.jpg");
+		}
+		
+		input[type=text], input[type=password] {
+			width: 100%;
+			padding: 12px 20px;
+			margin: 11px 0;
+			display: inline-block;
+			border: 1px solid #ccc;
+			box-sizing: border-box;
+		}
+		button {
+			background-color: black;
+			color: white;
+			padding: 14px 20px;
+			margin: 8px 0;
+			border: none;
+			cursor: pointer;
+			width: 100%;
+		
+			display: table-cell;
+			text-align: center;
+			vertical-align: middle;
+		}
+		
+		input[type="submit"] {
+			display: block;
+			margin: 0 auto;
+			padding: 7px 14px;
+		}
+		
 	body
 		h1 Please Enter Your Information:
 		
@@ -16,9 +65,8 @@ html
 				
 			div.input
 				span.label Password
-				input(type = "password", name = "password")
+				input(type = "password", name = "password") 
 				
-			
 			div.input
 				span.label Agency
 				input(type = "text", name = "agency")
@@ -39,4 +87,4 @@ html
 				input(type = "text" , name = "email")
 				
 			div.actions
-				input(type = "submit", value = "done")
+				input(class="btn btn-lg btn-primary btn-block", type = "submit", value = "done")

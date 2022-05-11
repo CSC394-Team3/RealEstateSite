@@ -1,0 +1,55 @@
+doctype html
+
+html
+
+
+	link(rel = 'stylesheet' , href = '/css/bootstrap.min.css')
+	link(rel = 'stylesheet' , href = '/css/styles.css')
+	
+	style.
+		body{
+			background-image: url("2473757.jpg");
+		}
+		
+		input[type=submit] {
+		  border-radius: 25px;
+		  
+		}
+		
+	body
+		h1 Customer Listings 
+		
+		form(action = "/listingsc", method = "post")
+			div.actions 
+				input(class="btn btn-md btn-secondary btn-block", type = "submit", name = "action" , value = "Order by Housing Type")
+				input(class="btn btn-md btn-secondary btn-block", type = "submit", name = "action" , value = "Order by Price")
+				input(class="btn btn-md btn-secondary btn-block", type = "submit", name = "action" , value = "Order by Number of Bedrooms")
+				input(class="btn btn-md btn-secondary btn-block", type = "submit", name = "action" , value = "Order by Number of Bathrooms")
+				input(class="btn btn-md btn-secondary btn-block", type = "submit", name = "action" , value = "Order by Zip Code") 
+	br
+
+	table
+		thead
+			tr
+				td Type
+				td Price
+				td Size (sq ft)
+				td Number of Bedroom
+				td Number of Bathroom 
+				td Street
+				td City
+				td State
+				td Zip
+		tbody
+			each property in properties
+				tr 
+					td #{property.propertytype}
+					td #{property.price}
+					td #{property.size}
+					td #{property.num_bedroom}
+					td #{property.num_bathroom}  
+					td #{property.street}
+					td #{property.city}
+					td #{property.state}
+					td #{property.zip} 
+

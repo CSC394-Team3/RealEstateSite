@@ -32,6 +32,7 @@ const Pool = require('pg').Pool
 var connectionParams =  null;
  
     connectionParams = {
+
 		/**
 		user: 'team3_user',
 		host: 'localhost',
@@ -48,7 +49,6 @@ var connectionParams =  null;
         port: 5432 ,
         ssl: true
 		 
-	
 }
 
 console.log(connectionParams)
@@ -399,38 +399,38 @@ router.get('/realtorpanel', (req,res) => {
  
  router.post('/realtorpanel', (req,res) => {
 	 
-		if(req.body.action && req.body.action == 'crud'){
+		if(req.body.action && req.body.action == 'Add a listing'){
 			res.redirect('/insert')
 		}
 		
-		if(req.body.action && req.body.action == 'change password'){
+		if(req.body.action && req.body.action == 'Change password'){
 			res.redirect('/realtorchangepassword')
 				
 		}   
 		
-		if(req.body.action && req.body.action == 'change password'){
+		if(req.body.action && req.body.action == 'Change password'){
 			res.redirect('/realtorchangephoneno')
 				
 		} 
 		
 		
 		
-		if(req.body.action && req.body.action == 'change email'){
+		if(req.body.action && req.body.action == 'Change email'){
 			res.redirect('/realtorchangeemail')
 				
 		} 
 		
 			
-		if(req.body.action && req.body.action == 'change agency'){
+		if(req.body.action && req.body.action == 'Change agency'){
 			res.redirect('/realtorchangeagency')
 				
 		} 
 		
-		if(req.body.action && req.body.action == 'change phone number'){
+		if(req.body.action && req.body.action == 'Change phone number'){
 			res.redirect('/realtorchangephoneno')
 		}		
 				
-		if(req.body.action && req.body.action == 'go to listings'){
+		if(req.body.action && req.body.action == 'Go to listings'){
 			res.redirect('/listingsr')
 		}  
 	 

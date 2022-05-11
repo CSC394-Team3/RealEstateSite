@@ -432,7 +432,7 @@ router.get('/realtorpanel', (req,res) => {
  })
  
 router.get('/listingsr', (req,res) => {
-	pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID` , (err,property_results) => {
+	pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE realtorID = '${current_realtorID}' ` , (err,property_results) => {
             console.log(err, property_results)
           res.render('listingsr', {  
 		      properties: property_results.rows

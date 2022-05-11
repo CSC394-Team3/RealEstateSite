@@ -5,11 +5,12 @@ html
 	body
 		h1 Welcome #{name} !
 		
-		form(action = "/customerpanel", method = "post")
+		form(action = "/customerpanel", method = "get")
 			div.actions 
 				input(type = "submit", name = "action" , value = "change password") 
 				input(type = "submit", name = "action" , value = "change email")  
-				input(type = "submit", name = "action" , value = "change phone number")  
+				input(type = "submit", name = "action" , value = "change phone number") 
+				input(type = "submit", name = "action" , value = "go to listings")
 				
 	br
 	

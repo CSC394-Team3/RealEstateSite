@@ -44,11 +44,7 @@ else{
       database: 'postgres',
       port: 5432 ,
     ssl: true
-  } 
-		
-		 
-	} 
-}
+  }   
 
 
 
@@ -91,9 +87,8 @@ router.get('/insert', (req,res) => {
 	
 	
 	
-}) 
+})  
 
- 
 router.post('/insert', (req, res) => {  
 	if(req.body.action && req.body.action == 'add'){
 		var addAddress = `INSERT INTO address (street, city, state, zip) VALUES ( '${req.body.street}', '${req.body.city}', '${req.body.state}', '${req.body.zip}' ) ON conflict do nothing RETURNING addressID ` 

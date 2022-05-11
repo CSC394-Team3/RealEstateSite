@@ -30,14 +30,7 @@ app.use(bodyParser.urlencoded({ extended:true }));
 const Pool = require('pg').Pool
 
 var connectionParams =  null;
-if (process.env.DATABASE_URL != null){
-    connectionParams = {
-		connectionString: process.env.DATABASE_URL,
-		ssl: { rejectUnauthorized: false }
-    } 
-}
-
-else{
+ 
     connectionParams = {
 		/**
 		user: 'team3_user',
@@ -55,7 +48,7 @@ else{
         port: 5432 ,
         ssl: true
 		 
-	}
+	
 }
 
 console.log(connectionParams)

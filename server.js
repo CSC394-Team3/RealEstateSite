@@ -43,7 +43,8 @@ else{
       password: 'Willow5!',
       database: 'postgres',
       port: 5432 ,
-    ssl: true 
+    ssl: true
+  } 
 }
 
 

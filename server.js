@@ -44,7 +44,13 @@ else{
       database: 'postgres',
       port: 5432 ,
     ssl: true
+<<<<<<< HEAD
   }   
+=======
+  } 
+		 
+}
+>>>>>>> eacd217c2e86cc05cdbca7eb82a9572c44cbad11
 
 
 

@@ -100,7 +100,7 @@ router.post('/users/login', async(req,res) => {
 
 router.get('/insert', (req,res) => {
 	
-    console.log('Accept: ' + req.get('Accept'))
+    
     
 	pool.query(`SELECT * FROM property`, (err,property_results) => {
         console.log(err, property_results)
@@ -110,14 +110,15 @@ router.get('/insert', (req,res) => {
 		      properties: property_results.rows
                 
 			});
-    console.log('Content-Type: ' + res.get('Content-Type'))
+        
+    
 	});
 })
 
 router.get('/register', (req,res) => { 
-    console.log('Accept: ' + req.get('Accept'))
+    
 	res.render('/register')
-    console.log('Content-Type: ' + res.get('Content-Type'))
+    
 }) 
 
 router.post('/register', (req,res) => {

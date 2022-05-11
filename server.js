@@ -45,9 +45,7 @@ else{
       port: 5432 ,
     ssl: true
   } 
-		
 		 
-	} 
 }
 
 

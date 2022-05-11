@@ -26,28 +26,31 @@ app.use(express.json())
 app.use(bodyParser.urlencoded({ extended:true }));
 //form-urlencoded
 
-//Database
 const Pool = require('pg').Pool
 
 var connectionParams =  null;
 if (process.env.DATABASE_URL != null){
     connectionParams = {
-		connectionString: process.env.DATABASE_URL,
-		ssl: { rejectUnauthorized: false }
+        connectionString: process.env.DATABASE_URL,
+        ssl: { rejectUnauthorized: false }
     } 
 }
 
-else{
-    connectionParams = {
-		user: 'team3_user',
-		host: 'localhost',
-		database: 'team3',
-		password: 'team3pass',
-		port: 5432 
+else{ 
+   connectionParams = {
+       host: 'willowrealestate.postgres.database.azure.com',
+       user: 'team5',
+      password: 'Willow5!',
+      database: 'postgres',
+      port: 5432 ,
+    ssl: true
+  } 
 		
 		 
-	}
+	} 
 }
+
+
 
 console.log(connectionParams)
 const pool = new pg.Client(connectionParams)

@@ -45,15 +45,7 @@ else{
 		password: 'team3pass',
 		port: 5432 
 		
-		
-		/**
-		host: 'willowrealestate.postgres.database.azure.com',
-        user: 'team5',
-        password: 'Willow5!',
-        database: 'postgres',
-        port: 5432 ,
-        ssl: true
-		 **/
+		 
 	}
 }
 

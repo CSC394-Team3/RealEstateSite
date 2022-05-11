@@ -1,11 +1,9 @@
-const express = require('express')
-const app = express()
-const bodyParser = require('body-parser');
-const port = process.env.PORT || 3000
-const router = express.Router();
-const path = require('path') 
-const pg = require('pg')
+const app = require('./server');
 
+const port = process.env.PORT || 3000
+
+<<<<<<< HEAD
+=======
 //Set location for accessing files
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -37,31 +35,23 @@ if (process.env.DATABASE_URL != null){
 
 else{
    connectionParams = {
-	host: 'willowrealestate.postgres.database.azure.com',
-    user: 'team5',
-    password: 'Willow5!',
-    database: 'postgres',
-    port: 5432,
-    ssl: true
+	user: 'team3_user',
+   	host: 'localhost',
+  	database: 'team3',
+  	password: 'team3pass',
+  	port: 5432
   }
 }
 
 console.log(connectionParams)
 const pool = new pg.Client(connectionParams)
+<<<<<<< Updated upstream
 
-pool.connect(err => {
-    if (err) throw err;
-    else {
-        console.log("connection error")
-    }
-});
+=======
+>>>>>>> Stashed changes
  
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Willow' });
-});
-
-router.get('/about', (req, res) => {
-  res.render('about', { title: 'About' });
 });
 	
 router.get('/users', (req, res) => {
@@ -100,25 +90,20 @@ router.post('/users/login', async(req,res) => {
 
 router.get('/insert', (req,res) => {
 	
-    
-    
 	pool.query(`SELECT * FROM property`, (err,property_results) => {
-        console.log(err, property_results)
+            console.log(err, property_results)
          
             res.render('insert', { 
                       teamNumber: 3, 
 		      properties: property_results.rows
-                
 			});
-        
-    
+			
+	
 	});
 })
 
 router.get('/register', (req,res) => { 
-    
 	res.render('/register')
-    
 }) 
 
 router.post('/register', (req,res) => {
@@ -235,7 +220,6 @@ router.post('/customerlogin', (req,res) => {
 
 router.get('/realtorlogin', (req,res) => {
 	res.render('realtorlogin')
-    
 	
 })
 
@@ -488,12 +472,8 @@ router.post('/customerchangephoneno', (req,res) => {
 	
 })
 
-module.exports = app;
-
-/*
 app.use('/',router);
+>>>>>>> a484981baf12c5131771f4a83bcbd2c315bbbdfd
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-}) 
-*/
-
+    console.log(`Example app listening on port ${port}`)
+})

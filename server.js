@@ -38,12 +38,11 @@ if (process.env.DATABASE_URL != null){
 
 else{ 
    connectionParams = {
-       host: 'willowrealestate.postgres.database.azure.com',
-       user: 'team5',
-      password: 'Willow5!',
-      database: 'postgres',
-      port: 5432 ,
-    ssl: true
+       user: 'team3_user',
+   	host: 'localhost',
+  	database: 'team3',
+  	password: 'team3pass',
+  	port: 5432
   } 
 }
 

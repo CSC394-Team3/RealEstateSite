@@ -2,53 +2,37 @@ doctype html
    
 html
 	head 
-	title Login
-	style. 
-		form {
-			border: 3px solid #f1f1f1;
-		}
-		h1 {text-align: center;}
-		body {
-			font-family: Arial, Helvetica, sans-serif;
-			color: white;
-			margin        : 0;
-			padding       : 0;
-			display       : grid;
-			place-content : center;
-			min-height    : 100vh;
-			background-image: url("526370.jpg");
-		}
+	style.
+		body{
+			background-image: url("2473757.jpg");
 		
+		}
+		input[type="submit"] {
+				display: block; 
+				padding: 7px 14px;
+			}
 		input[type=text], input[type=password] {
-			width: 100%;
-			padding: 12px 20px;
+			width: 25%; 
 			margin: 11px 0;
 			display: inline-block;
 			border: 1px solid #ccc;
 			box-sizing: border-box;
-		}
-		button {
-			background-color: #04AA6D;
-			color: white;
-			padding: 14px 20px;
-			margin: 8px 0;
-			border: none;
-			cursor: pointer;
-			width: 100%;
-		
-			display: table-cell;
-			text-align: center;
-			vertical-align: middle;
-		}
-		
-		input[type="submit"] {
-			display: block;
-			margin: 0 auto;
 			padding: 7px 14px;
+			border-radius: 25px;
+		} 
+		
+		h1{
+			 font-family: Arial, Helvetica, sans-serif;
+			 text-align: left;
+			 margin: 0 0 2rem;
 		}
-  
+		 
+	title Login
+	link(rel = 'stylesheet' , href = '/css/bootstrap.min.css')
+	link(rel = 'stylesheet' , href = '/css/styles.css')
+	  
 	body 
-		h1 LOGIN
+		h1 Please Login Customer
 	
 		form(action="/customerlogin", method="post")
 			div.input
@@ -60,5 +44,5 @@ html
 				input(type = "password", name = "password")
 
 			div.actions
-				input(type = "submit", name = "action", value = "login")
+				input( class="btn btn-lg btn-primary btn-block", type = "submit", name = "action", value = "login")
 				//input(type = "submit", name = "action", value = "register")

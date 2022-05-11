@@ -5,7 +5,7 @@ const port = process.env.PORT || 3000
 const router = express.Router();
 const path = require('path') 
 const pg = require('pg')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt')  
 
 //Set location for accessing files
 app.use(express.static(path.join(__dirname, 'public')));

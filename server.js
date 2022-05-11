@@ -30,22 +30,25 @@ app.use(bodyParser.urlencoded({ extended:true }));
 const Pool = require('pg').Pool
 
 var connectionParams =  null;
-if (process.env.DATABASE_URL != null){
+ 
     connectionParams = {
-		connectionString: process.env.DATABASE_URL,
-		ssl: { rejectUnauthorized: false }
-    } 
-}
 
-else{
-    connectionParams = {
-		user: 'team5',
+		/**
+		user: 'team3_user',
+		host: 'localhost',
+		database: 'team3',
+		password: 'team3pass',
+		port: 5432 
+		**/
+		
+		
 		host: 'willowrealestate.postgres.database.azure.com',
-		database: 'postgres',
-		password: 'Willow5!',
-		port: 5432,
-		ssl: true
-	}
+        user: 'team5',
+        password: 'Willow5!',
+        database: 'postgres',
+        port: 5432 ,
+        ssl: true
+		 
 }
 
 console.log(connectionParams)

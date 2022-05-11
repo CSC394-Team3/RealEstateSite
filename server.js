@@ -97,7 +97,7 @@ router.post('/insert', (req, res) => {
 		
 		pool.query(addAddress, (err,result) => {
 			if(!result ||result.rows.length == 0) { return }
-			 if(result && result.rows.length > 0) {
+			 if(result.rows.length > 0) {
 				addressID = result.rows[0].addressid 
 				console.log(err,result)
 				var insertProperty = `INSERT INTO property (propertyType, price, size, num_bedroom, num_bathroom,realtorID, addressID) VALUES ('${req.body.propertytype}', '${req.body.price}','${req.body.size}','${req.body.num_bedroom}','${req.body.num_bathroom}','${current_realtorID}', '${addressID}')`

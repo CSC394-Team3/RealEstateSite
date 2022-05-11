@@ -96,8 +96,8 @@ router.post('/insert', (req, res) => {
 		var addAddress = `INSERT INTO address (street, city, state, zip) VALUES ( '${req.body.street}', '${req.body.city}', '${req.body.state}', '${req.body.zip}' ) ON conflict do nothing RETURNING addressID ` 
 		
 		pool.query(addAddress, (err,result) => {
-			if(!result ||result.rows.length == 0) { return }
-			 if(result.rows.length > 0) {
+			if(!result || result.rows.length == 0) { return }
+			 
 				addressID = result.rows[0].addressid 
 				console.log(err,result)
 				var insertProperty = `INSERT INTO property (propertyType, price, size, num_bedroom, num_bathroom,realtorID, addressID) VALUES ('${req.body.propertytype}', '${req.body.price}','${req.body.size}','${req.body.num_bedroom}','${req.body.num_bathroom}','${current_realtorID}', '${addressID}')`
@@ -107,7 +107,7 @@ router.post('/insert', (req, res) => {
 					res.redirect('/insert')
 		
 					}) 
-				}
+				
 			})
 			 
 		} 

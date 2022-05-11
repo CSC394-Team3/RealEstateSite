@@ -14,11 +14,11 @@ describe('The express server', function () {
         });
     });
 
-    it('should render jade for the root path', function (done) {
+    it('should render html for the root path', function (done) {
         
         request(server)
-            .get('/insert')
-            .expect('Content-Type', /jade/)
+            .get('/')
+            .expect('Content-Type', /html/)
             .expect(200, function(err, res) {
                 if (err) { return done(err); }
             

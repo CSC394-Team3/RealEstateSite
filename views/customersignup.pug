@@ -63,16 +63,7 @@ html
 			margin-bottom: 10px;  
 		}
 		
-	body
-		script. 
-			function changeSubmit(e) {
-				if (e.target.checked) {
-					document.getElementById("submitButton").disabled = false
-				} else {
-					document.getElementById("submitButton").disabled = true
-				}
-			}
-
+	 
 
 
 		span.h0s(style={color: 'white', 'font-size': '50px', 'tab-size': 12 }) Create your Willow Account:
@@ -110,4 +101,4 @@ html
 				input(type = "checkbox", name = "RealtorTerms", onclick="changeSubmit()")
 				
 			div.actions
-				input(class="btn btn-lg btn-primary btn-block", type = "submit", disabled= "false", id="submitButton", value = "done")
+				input(class="btn btn-lg btn-primary btn-block", type = "submit", id="submitButton", value = "done")

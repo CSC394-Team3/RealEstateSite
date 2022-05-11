@@ -39,11 +39,12 @@ if (process.env.DATABASE_URL != null){
 
 else{
     connectionParams = {
-		user: 'team3_user',
-		host: 'localhost',
-		database: 'team3',
-		password: 'team3pass',
-		port: 5432 
+		user: 'team5',
+		host: 'willowrealestate.postgres.database.azure.com',
+		database: 'postgres',
+		password: 'Willow5!',
+		port: 5432,
+		ssl: true
 	}
 }
 
@@ -395,38 +396,38 @@ router.get('/realtorpanel', (req,res) => {
  
  router.post('/realtorpanel', (req,res) => {
 	 
-		if(req.body.action && req.body.action == 'crud'){
+		if(req.body.action && req.body.action == 'Add a listing'){
 			res.redirect('/insert')
 		}
 		
-		if(req.body.action && req.body.action == 'change password'){
+		if(req.body.action && req.body.action == 'Change password'){
 			res.redirect('/realtorchangepassword')
 				
 		}   
 		
-		if(req.body.action && req.body.action == 'change password'){
+		if(req.body.action && req.body.action == 'Change password'){
 			res.redirect('/realtorchangephoneno')
 				
 		} 
 		
 		
 		
-		if(req.body.action && req.body.action == 'change email'){
+		if(req.body.action && req.body.action == 'Change email'){
 			res.redirect('/realtorchangeemail')
 				
 		} 
 		
 			
-		if(req.body.action && req.body.action == 'change agency'){
+		if(req.body.action && req.body.action == 'Change agency'){
 			res.redirect('/realtorchangeagency')
 				
 		} 
 		
-		if(req.body.action && req.body.action == 'change phone number'){
+		if(req.body.action && req.body.action == 'Change phone number'){
 			res.redirect('/realtorchangephoneno')
 		}		
 				
-		if(req.body.action && req.body.action == 'go to listings'){
+		if(req.body.action && req.body.action == 'Go to listings'){
 			res.redirect('/listingsr')
 		}  
 	 

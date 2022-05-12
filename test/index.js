@@ -17,7 +17,7 @@ describe('The express server', function () {
     it('should render pug for the root path', function (done) {
         
         request(server)
-            .get('/realtorpanel')
+            .get('/')
             .expect('Content-Type', /html/)
             .expect(200, function(err, res) {
                 if (err) { return done(err); }

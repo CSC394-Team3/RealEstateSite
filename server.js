@@ -474,6 +474,10 @@ router.post('/customerchangephoneno', (req,res) => {
 
 app.use('/',router);
 >>>>>>> a484981baf12c5131771f4a83bcbd2c315bbbdfd
+
+module.exports = app;
+
+/*
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
-})
+}) */

@@ -37,12 +37,7 @@ describe('The express server', function() {
 	it('should respond to valid POST requests for the root path, with a redirect',
 		function(done) {
 			request(server)
-				.post('/')
-				.send({
-					"first_name": "test",
-					"last_name": "test"
-				})
-				
+				.post('/') 
 				.expect(302)
 				.expect('Location', '/')
 				.end(done);

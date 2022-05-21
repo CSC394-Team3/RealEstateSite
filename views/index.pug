@@ -2,40 +2,44 @@ doctype html
    
 html
 
-    head
-      title Willow
+	head
+	title Willow
       
-      // stylesheet
-      link(href='index_style.css', rel = 'stylesheet')
-      
-      
-    // Header
-    .header
-      img(src='Logo_banner.png', style='display: block; margin-right: auto;  width: 10%;')
-      .header-right
-        a.active(href='#home') Home
-        a(href='#contact') Contact
-        a(href='#about') About
-        a(href='#login') Login
-        a(href='#faq') FAQ
-        a(href='#contact') Contact
-        
-    // image banner
-    .image_banner
-      a.text_banner Find your dream home today
-    
-    body
-        p(style='text-align:center;') Please choose a login option:
-        form(action='/login', method='post', style='margin: auto; width: 150px;')
-          div.actions
-            input(type='submit', name='action', value='customer')
-            input(type='submit', name='action', value='realtor')
-            
-        p(style='text-align:center;') Or sign up here: 
-        form(action='/register', method='post', style='margin: auto; width: 150px;')
-          div.actions
-            input(type='submit', name='action', value='customer')
-            input(type='submit', name='action', value='realtor')
-            
-    .footer
-      p  Footer 
+	// stylesheet
+	link(rel = 'stylesheet' , href = '/css/bootstrap.min.css')
+	link(rel = 'stylesheet' , href = '/css/styles.css')
+	link(rel = 'stylesheet', href='index_style.css') 
+
+	style.
+		input[type=submit] {
+			border-radius: 25px; 
+		}
+ 
+	// Header
+	.header
+		img(src='Logo_banner.png', style='display: block; margin-right: auto;  width: 10%;')
+		.header-right
+			a.active(href='#home') Home
+			a(href='#contact') Contact
+			a(href='#about') About
+			a(href='#login') Login
+			a(href='#faq') FAQ
+ 
+	// image banner
+	.image_banner
+		a.text_banner Find your dream home today
+
+	body
+		p(style='text-align:center;') Please choose a login option:
+		form(action='/login', method='post', style='margin: auto; width: 150px;')
+			div.actions
+				input(class="btn btn-sm btn-secondary btn-block", type='submit', name='action', value='customer')
+				input(class="btn btn-sm btn-secondary btn-block", type='submit', name='action', value='realtor')
+   
+		p(style='text-align:center;') Or sign up here: 
+		form(action='/register', method='post', style='margin: auto; width: 150px;')
+			div.actions
+				input(class="btn btn-sm btn-secondary btn-block", type='submit', name='action', value='customer')
+				input(class="btn btn-sm btn-secondary btn-block", type='submit', name='action', value='realtor')
+ 
+	

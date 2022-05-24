@@ -618,9 +618,41 @@ router.post('/listingsc', (req,res) => {
 		      properties: results.rows
 			}); 
 		}) 
+	}else if(req.body.action && req.body.action == 'My Favorites') {
+		 res.redirect('/favorites')
 	}
 })
 
+router.get('/favorites', (req,res) => {
+	pool.query(`SELECT * FROM customer WHERE user_name = '${current_username}'`, (err,results) =>  {
+		console.log(err, results)
+		var favorites;
+		if (!(results.rows) || results.rows.length == 0 || results.rows[0].favorites == null) {
+			res.redirect('/nofavorites')
+		}
+		else {
+			favorites = results.rows[0].favorites.split(',')
+			var properties = []
+			for (favorite in favorites) {
+				pool.query(`SELECT * FROM property WHERE propertyid = '${favorite}'`, (err, results) =>{
+					properties.push(results.rows[0])
+				})
+			}
+			res.render('favorites', {  
+				properties : properties
+			  });
+		}
+	})
+})
+
+router.get('/nofavorites' , (req,res) => {
+	res.render('nofavorites')
+})
+
+router.post('/nofavorites' , (req,res) => {
+	if(req.body.action && req.body.action == 'Listings')
+		res.redirect('/listingsc')
+})
 
 router.get('/customerchangepassword' , (req,res) => {
 	res.render('customerchangepassword')

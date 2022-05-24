@@ -1,0 +1,14 @@
+doctype html
+
+html
+	head
+	title No Favorites Found!
+	
+	body
+		h1 No favorites found!
+		h2 Start favoriting listings now
+		
+		form(action="/nofavorites",method="post")
+			div.actions 
+				input(type = "submit", name = "action" , value = "Listings")
+

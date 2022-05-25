@@ -1,0 +1,23 @@
+doctype html
+
+html
+	head
+	title Contact Us
+	
+	body 
+		
+		form(action="/autofill",method="post")  
+			script.
+				var email = sessionStorage.getItem("email");
+				console.log(email);  
+			span.label To: db2@busters.com
+			span.textarea(name = "email", id = "email")
+			div.input
+				span.label Please type your message here: 
+			textarea(name="message", id="message", rows = 20, cols = 80) Hello I am interested in this property. Please message me back with a good time for us to talk. 
+			div.actions  
+				input(type = "submit", name = "action", value = "done")
+			
+			
+				
+

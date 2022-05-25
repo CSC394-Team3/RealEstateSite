@@ -1,0 +1,63 @@
+doctype html
+
+html
+
+	link(rel = 'stylesheet' , href = '/css/bootstrap.min.css')
+	link(rel = 'stylesheet' , href = '/css/styles.css') 
+	link(href = 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet')
+	script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" )
+	
+	style.
+		body{
+			 
+		}
+		
+		input[type=submit] {
+		  border-radius: 25px;
+		  
+		}
+		
+	body
+	.container 
+		h1 Favorite Listings  
+ 
+		table#listings.table.table-hover.table-striped.table-bordered
+			thead
+				tr
+					td
+					td Type
+					td Price
+					td Size (sq ft)
+					td Number of Bedroom
+					td Number of Bathroom 
+					td Street
+					td City 
+					td State 
+					td Zip
+					td Realtor Email
+					
+			tbody
+				each property in properties
+					tr 
+						 
+						td 
+							input#checkbox1(type='checkbox' name='options[]' value='1')
+						  
+						td #{property.favorite}
+						
+						td
+							div.actions
+								a(class="btn btn-md btn-success btn-block", type = "submit", name = "action" , id = "contactRealtor", href = "/autofill") Contact Realtor  
+						
+						script(src='https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css')
+						script(src='https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js')
+						script(src='https://cdn.datatables.net/buttons/1.12.0/js/dataTables.buttons.min.js')
+						
+						script.
+							$(document).ready(function() {
+								$('#listings').DataTable();  
+							});
+							
+						 
+							
+

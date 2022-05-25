@@ -1,0 +1,11 @@
+doctype html
+
+html
+	head
+	title Message Sucessfully Sent
+	
+	body 
+		h1 Your message has been sent. Thank you for your message!   
+		form(action="/autofillmessagesent",method="post") 
+			div.actions  
+				input(type = "submit", name = "action", value = "Go back to listings")

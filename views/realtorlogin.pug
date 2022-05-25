@@ -16,7 +16,7 @@ html
 			display       : grid;
 			place-content : center;
 			min-height    : 100vh;
-			background-image: url("526370.jpg");
+			background-color: #cad297;
 		}
 		
 		input[type=text], input[type=password] {
@@ -28,7 +28,7 @@ html
 			box-sizing: border-box;
 		}
 		button {
-			background-color: #04AA6D;
+			background-color: #2A520F;
 			color: white;
 			padding: 14px 20px;
 			margin: 8px 0;
@@ -47,15 +47,17 @@ html
 			padding: 7px 14px;
 		}
 	body 
-		h1 Please enter login info
+		span.h0s(style={color: 'black', 'font-size': '30px', 'tab-size': 12 }) <strong> Log in here: <strong>
 	
 		form(action="/realtorlogin", method="post")
 			div.input
-				span.label User Name
+				
+				span.h1(style={color: 'black', 'font-size': '16px', 'tab-size': 12 }) <strong>Username<strong>
 				input(type="text",name="username")
 			
 			div.input
-				span.label Password
+				
+				span.h2(style={color: 'black', 'font-size': '16px', 'tab-size': 12 }) <strong>Password<strong>
 				input(type = "password", name = "password")
 
 			div.actions

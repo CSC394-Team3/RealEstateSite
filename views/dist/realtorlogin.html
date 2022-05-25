@@ -1,63 +1,93 @@
 <!DOCTYPE html>
 <html>
   <head> </head>
-  <title>Login</title>
+  <title>Login Form Design</title>
   <style>
-    form {
-    	border: 3px solid #f1f1f1;
-    }
-    h1 {text-align: center;}
-    body {
-    	font-family: Arial, Helvetica, sans-serif;
-    	color: white;
-    	margin        : 0;
-    	padding       : 0;
-    	display       : grid;
-    	place-content : center;
-    	min-height    : 100vh;
-    	background-image: url("526370.jpg");
+    body{
+        margin:0;
+        padding:0;
+        background-color: #cad297;
+        background-size:cover;
+        background-position:center ;
+        font-family:sans-serif;
     }
     
-    input[type=text], input[type=password] {
-    	width: 100%;
-    	padding: 12px 20px;
-    	margin: 11px 0;
-    	display: inline-block;
-    	border: 1px solid #ccc;
-    	box-sizing: border-box;
-    }
-    button {
-    	background-color: #04AA6D;
-    	color: white;
-    	padding: 14px 20px;
-    	margin: 8px 0;
-    	border: none;
-    	cursor: pointer;
-    	width: 100%;
-    
-    	display: table-cell;
-    	text-align: center;
-    	vertical-align: middle;
+    .loginbox{
+        width:320px;
+        height:420px;
+        background: #000;
+        color: #fff;
+        top:50%;
+        left:50%;
+        position:absolute;
+        transform: translate(-50%,-50%);
+        box-sizing: border-box;
+        padding: 70px 30px;
     }
     
-    input[type="submit"] {
-    	display: block;
-    	margin: 0 auto;
-    	padding: 7px 14px;
+    .avatar{
+        width: 100px;
+        height:100px;
+        border-radius: 50%;
+        position: absolute;
+        top: -50px;
+        left: calc(50% - 50px);
     }
+    
+    h1{
+        margin: 0;
+        padding: 0 0 20px;
+        text-align: center;
+        font-size: 22px;
+    }
+    
+    .loginbox p{
+        margin: 0;
+        padding: 0;
+        font-weight: bold;
+    }
+    
+    .loginbox input{
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    
+    .loginbox input[type="text"], input[type="password"]
+    {
+        border: none;
+        border-bottom: 1px solid #fff;
+        background: transparent;
+        outline: none;
+        height: 40px;
+        color: #fff;
+        font-size: 16px;
+    }
+    
+    .loginbox input[type="submit"]{
+        border: none;
+        outline: none;
+        height: 40px;
+        background: #fb2525;
+        color: #fff;
+        font-size: 18px;
+        border-radius:20px ;
+    }
+    
+    .loginbox input[type="submit"]:hover{
+        cursor: pointer;
+        background: #ffc107;
+        color: #000;
+    }
+     
   </style>
-  <body> 
-    <h1>Please enter login info</h1>
-    <form action="/realtorlogin" method="post">
-      <div class="input"><span class="label">User Name</span>
-        <input type="text" name="username">
-      </div>
-      <div class="input"><span class="label">Password</span>
-        <input type="password" name="password">
-      </div>
-      <div class="actions">
-        <input type="submit" name="action" value="login">
-      </div>
+  <div class="loginbox"><img class="avatar" src="avatar.png">
+    <h1>Login Here</h1>
+    <form action="/customerlogin" method="post">
+      <p>Username</p>
+      <input type="text" name="" placeholder="Enter Username">
+      <p>Password</p>
+      <input type="password" name="" placeholder="Enter Password">
+      <input type="submit" name="" value="Login">
     </form>
-  </body>
+  </div>
 </html>

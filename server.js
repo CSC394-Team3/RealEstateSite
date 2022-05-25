@@ -2,8 +2,8 @@ const app = require('./server');
 
 const port = process.env.PORT || 3000
 
-<<<<<<< HEAD
-=======
+//<<<<<<< HEAD
+//=======
 //Set location for accessing files
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -45,11 +45,12 @@ else{
 
 console.log(connectionParams)
 const pool = new pg.Client(connectionParams)
+/*
 <<<<<<< Updated upstream
 
 =======
 >>>>>>> Stashed changes
- 
+*/
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Willow' });
 });
@@ -473,7 +474,7 @@ router.post('/customerchangephoneno', (req,res) => {
 })
 
 app.use('/',router);
->>>>>>> a484981baf12c5131771f4a83bcbd2c315bbbdfd
+//>>>>>>> a484981baf12c5131771f4a83bcbd2c315bbbdfd
 
 module.exports = app;
 

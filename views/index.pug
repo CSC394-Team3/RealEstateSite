@@ -19,15 +19,27 @@ html
 	.header
 		img(src='Logo_banner.png', style='display: block; margin-right: auto;  width: 10%;')
 		.header-right
-			a.active(href='#home') Home
-			a(href='#contact') Contact
-			a(href='#about') About
-			a(href='#login') Login
-			a(href='#faq') FAQ
+            a.active(href='index.pug') Home
+			a(href='contactus.pug') Contact
+			a(href='about.pug') About
+			.dropdown
+                button.dropbtn
+                | Log in
+                i.fa.fa-caret-down
+                .dropdown-content
+                    a(href='customerlogin.pug') Customer
+                    a(href='realtorlogin.pug') Realtor
+            .dropdown
+                button.dropbtn
+                | Sign up
+                i.fa.fa-caret-down
+                .dropdown-content
+                    a(href='customersignup.pug') New Customer
+                    a(href='realtorsignup.pug') New Realtor
  
 	// image banner
 	.image_banner
-		a.text_banner Find your dream home today
+        a.text_banner Find your dream home today
 
 	body
 		p(style='text-align:center;') Please choose a login option:

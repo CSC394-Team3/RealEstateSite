@@ -8,12 +8,26 @@ html
       link(rel='stylesheet', href='index_style.css')
       
     .header
-        img(src='Logo_banner.png', style='display: block; margin-right: auto;  width: 10%;')
-        .header-right
-          a.active(href='firstpage_willowTEST.html') Home
-          a(href='about.pug') About
-          a(href='#faq') FAQ
-          a(href='#contact') Contact
+		img(src='Logo_banner.png', style='display: block; margin-right: auto;  width: 10%;')
+		.header-right
+            a.active(href='index.pug') Home
+			a(href='contactus.pug') Contact
+			a(href='about.pug') About
+			.dropdown
+                button.dropbtn
+                | Log in
+                i.fa.fa-caret-down
+                .dropdown-content
+                    a(href='customerlogin.pug') Customer
+                    a(href='realtorlogin.pug') Realtor
+            .dropdown
+                button.dropbtn
+                | Sign up
+                i.fa.fa-caret-down
+                .dropdown-content
+                    a(href='customersignup.pug') New Customer
+                    a(href='realtorsignup.pug') New Realtor
+            a(href='#contact') Contact
     .header_line
     
     h1  About Us 
@@ -39,4 +53,4 @@ html
           | Suspendisse posuere laoreet dolor lacinia fermentum. Nunc a mi eget enim auctor molestie ut ut leo. Maecenas pellentesque imperdiet sem a molestie. Vestibulum congue, justo at vehicula rutrum, orci urna accumsan elit, in pretium ante lacus in sem. In tempus ipsum dapibus purus porttitor pellentesque. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nulla imperdiet imperdiet dolor ultrices vulputate. Donec congue nibh et velit placerat, non dictum elit finibus. Ut commodo semper interdum. Vivamus a pulvinar libero. Donec vitae aliquam justo, id fermentum augue. Quisque maximus, ligula ut ornare porta, ante lorem tempus turpis, id porta nunc orci efficitur dui. Nulla in vestibulum magna, non vulputate eros. Sed faucibus enim eu sagittis elementum.
           
     .footer
-      p  Footer 
+       

@@ -1,66 +1,36 @@
 <!DOCTYPE html>
-<html> </html>
-<style>
-  body {font-family: Arial, Helvetica, sans-serif;
-  	color: white;
-  	margin        : 50;
-  	padding       : 50;
-  	display       : grid;
-  	place-content : center;
-  	min-height    : 100vh;
-  	background-image: url("526370.jpg");}
-  	* {box-sizing: border-box}
-  
-  input[type=text], input[type=password] {
-  	width: 100%;
-  	padding: 6px 10px;
-  	margin: 4px 1;
-  	display: inline-block;
-  	border: 1px solid #ccc;
-  	box-sizing: border-box;
-  }
-  
-  input[type="submit"] {
-  	display: block;
-  	margin: 0 auto;
-  	padding: 7px 14px;
-  }
-  body
-  	h1 Please Enter Your Information:
-  	
-  	form(action = "/realtorsignup", method = "post") 
-  		
-  		div.input
-  			span.label Realtor ID
-  			input(type = "text", name = "realtorID")
-  			
-  		div.input
-  			span.label Username
-  			input(type = "text" , name = "username")
-  			
-  		div.input
-  			span.label Password
-  			input(type = "password", name = "password") 
-  			
-  		div.input
-  			span.label Agency
-  			input(type = "text", name = "agency")
-  		div.input
-  			span.label First Name
-  			input(type = "text" , name = "firstName")
-  			
-  		div.input
-  			span.label Last Name
-  			input(type = "text" , name = "lastName")
-  			
-  		div.input  
-  			span.label Phone Number
-  			input(type = "text" , name = "phoneno")
-  			
-  		div.input
-  			span.label Email
-  			input(type = "text" , name = "email")
-  			
-  		div.actions
-  			input(type = "submit", value = "done")
-</style>
+<html> 
+  <link href="signup.css" rel="stylesheet">
+  <body>
+    <h1>Create Your Account</h1>
+    <form action="/realtorsignup" method="post"> 
+      <div class="input"><span class="label">Realtor ID</span>
+        <input type="text" name="realtorID">
+      </div>
+      <div class="input"><span class="label">Username</span>
+        <input type="text" name="username">
+      </div>
+      <div class="input"><span class="label">Password</span>
+        <input type="password" name="password">
+      </div>
+      <div class="input"><span class="label">Agency</span>
+        <input type="text" name="agency">
+      </div>
+      <div class="input"><span class="label">First Name</span>
+        <input type="text" name="firstName">
+      </div>
+      <div class="input"><span class="label">Last Name</span>
+        <input type="text" name="lastName">
+      </div>
+      <div class="input"> <span class="label">Phone Number</span>
+        <input type="text" name="phoneno">
+      </div>
+      <div class="input"><span class="label">Email</span>
+        <input type="text" name="email">
+      </div>
+      <div class="actions">
+        <input type="submit" value="SignIn">
+      </div>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,34 @@
+doctype html
+
+html
+	link(href='signup.css', rel = 'stylesheet')
+	body
+		h1 Create Your Account
+
+		form(action = "/customersignup", method = "post")  
+			div.input
+				span.label Username
+				input(type = "text" , name = "username")
+				
+			div.input
+				span.label Password
+				input(type = "password" , name = "password")
+				
+			div.input
+				span.label First Name
+				input(type = "text" , name = "firstName")
+				
+			div.input
+				span.label Last Name
+				input(type = "text" , name = "lastName")
+				
+			div.input  
+				span.label Phone Number
+				input(type = "text" , "phoneno")
+				
+			div.input
+				span.label Email
+				input(type = "text" , "email")
+				
+			div.actions
+				input(type = "submit", value = "SignUp")

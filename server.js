@@ -6,7 +6,7 @@ const router = express.Router();
 const path = require('path') 
 const pg = require('pg')
 const bcrypt = require('bcrypt') 
-const { body, validationResult } = require('express-validator'); 
+const { body, validationResult } = require('express-validator');  
 
 //Set location for accessing files
 app.use(express.static(path.join(__dirname, 'public')));
@@ -84,37 +84,25 @@ router.get('/insert', (req,res) => {
 			}); 
 			
 	
-	});
-	 
-	
-	
-	
+	}); 
 })  
 
 router.post('/insert',   (req, res) => {  
 	if(req.body.action && req.body.action == 'add'){
-		var addAddress = `INSERT INTO address (street, city, state, zip) VALUES ( '${req.body.street}', '${req.body.city}', '${req.body.state}', '${req.body.zip}' ) ON conflict do nothing RETURNING  addressID` 
+		var addAddress = `INSERT INTO address (street, city, state, zip) VALUES ( '${req.body.street}', '${req.body.city}', '${req.body.state}', '${req.body.zip}' )  RETURNING  addressID` 
 	
 		pool.query(addAddress, (err,result) => {
 			if( !result ) { return }
 			    addressID = result.rows[0].addressid 
 				console.log(err,result)
+				
 				var insertProperty = `INSERT INTO property (propertyType, price, size, num_bedroom, num_bathroom,realtorID, addressID) VALUES ('${req.body.propertytype}', '${req.body.price}','${req.body.size}','${req.body.num_bedroom}','${req.body.num_bathroom}','${current_realtorID}', '${addressID}')`
 			
 					pool.query(insertProperty, (err, result) => {
-						console.log(err, result) 
+						console.log(err, addressID) 
 						res.redirect('/insert') 
 					})  
-			}) 
-		
-			
-		var insertProperty = `INSERT INTO property (propertyType, price, size, num_bedroom, num_bathroom,realtorID, addressID) VALUES ('${req.body.propertytype}', '${req.body.price}','${req.body.size}','${req.body.num_bedroom}','${req.body.num_bathroom}','${current_realtorID}', '${addressID}')`
-			
-			
-		pool.query(insertProperty, (err, result) => {
-			console.log(err, result) 
-			res.redirect('/insert') 
-		})   
+			})  
 	}
 		  
 	if(req.body.action && req.body.action == 'update'){ 
@@ -122,7 +110,7 @@ router.post('/insert',   (req, res) => {
 	var updateAddress = `UPDATE address SET street = '${req.body.street}', city = '${req.body.city}', state = '${req.body.state}', zip = '${req.body.zip}' RETURNING addressID`
 	
 	pool.query(updateAddress , (err,result) => {
-		if(result.rows.length == 0){
+		if(!result){
 			return
 		}else{
 			addressID = result.rows[0].addressid 
@@ -143,12 +131,24 @@ router.post('/insert',   (req, res) => {
 }
 
 	if(req.body.action && req.body.action == 'delete'){ 
-		pool.query(`DELETE FROM property WHERE addressID = '${addressID}'`, (err,result) => { 
-		console.log(err, result) 
+		var deleteAddress = `DELETE FROM address WHERE street = '${req.body.street}', city = '${req.body.city}', state = '${req.body.state}', zip = '${req.body.zip}' RETURNING addressID`
 		
-		res.redirect('/insert')
-		
-		})
+		pool.query(deleteAddress , (err,result) => {
+		if(!result){
+			return
+		}else{
+			addressID = result.rows[0].addressid 
+			
+			var deletePropert = `DELETE FROM property WHERE addressID = '${addressID}'`
+	
+			pool.query( deleteProperty , (err,result) => {
+			console.log(err, result)
+
+			res.redirect('/insert')
+				
+			})
+		}
+	}) 
 	}
 }) 
 
@@ -243,6 +243,15 @@ router.post('/realtorsignuperror' , (req,res) => {
 	} 
 	
 })
+
+router.get('/favorites' , (req,res) => {
+	res.render('favorites')
+})
+
+router.post('/favorites' , (req,res) => {
+	
+	
+}) 
 
 router.get('/invalid', (req,res) => {
 	res.render('invalidlogin')
@@ -354,7 +363,7 @@ realtor = true
 //check user name and password with db
 	if(req.body.action && req.body.action == 'login'){
 		   
-			current_username = req.body.username;
+			current_username = req.body.username
 			 pool.query(`SELECT * FROM realtor WHERE user_name = '${req.body.username}'`, (err,result) => {
 				console.log(err,result)
 				
@@ -440,8 +449,10 @@ router.get('/realtorpanel', (req,res) => {
 	 
  })
  
+ 
 router.get('/listingsr', (req,res) => {
 	pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE realtorid = '${current_realtorID}' ` , (err,property_results) => {
+ 
             console.log(err, property_results)
           res.render('listingsr', {  
 		      properties: property_results.rows
@@ -481,10 +492,12 @@ router.post('/listingsr', (req,res) => {
 			res.render('listingsr', {  
 		      properties: results.rows
 			}); 
-		}) 
+		})
+	}else if(req.body.action && req.body.action == 'Contact Us'){
+		res.redirect('/contactus')
 	}
-	
-})
+})  
+
 
 
 router.get('/realtorchangeagency', (req,res) => {
@@ -579,7 +592,7 @@ router.get('/customerpanel', (req,res) => {
 	 
  }) 
  
- router.get('/listingsc', (req,res) => {
+ router.get('/listingsc', (req,res) => { 
 	if (req.query.addressid != undefined) {
 		pool.query(`SELECT * FROM customer WHERE user_name = '${current_username}'`, (err,results) =>  {
 			var addaddress;
@@ -716,9 +729,22 @@ router.post('/favorites', (req,res) => {
 		 res.redirect('/listingsc')
 	}else if(req.body.action && req.body.action == 'Contact Us') {
 		res.redirect('/contactus') 
-	}
+	}else if(req.body.action && req.body.action == 'Contact Realtor' ){
+		res.redirect('/autofill')
+	
+	} 
+	
 	
 })
+
+router.get('/favorites' , (req,res) => {
+	pool.query(`SELECT * FROM customer` , (err,property_results) => {
+            console.log(err, property_results) 
+			res.render('favorites', {  
+		      properties: property_results.rows
+			});   
+	});   
+}) 
 
 router.get('/contactus' , (req,res) => {
 	res.render('contactus')
@@ -726,10 +752,22 @@ router.get('/contactus' , (req,res) => {
 
 router.post('/contactus' , (req,res) => {
 	if(req.body.action && req.body.action == 'done' ){
-		res.redirect('messagesent')
+		res.redirect('/messagesent')
 	}
 	
 })
+
+router.get('/autofill' , (req,res) => {
+	res.render('autofill')
+})
+
+router.post('/autofill' , (req,res) => {
+	if(req.body.action && req.body.action == 'done' ){
+		res.redirect('/autofillmessagesent')
+	}
+	
+})
+ 
 
 router.get('/messagesent' , (req,res) => {
 	res.render('messagesent')
@@ -741,8 +779,20 @@ router.post('/messagesent' , (req,res) => {
 		res.redirect('/listingsc')
 	}
 	
+}) 
+
+
+router.get('/autofillmessagesent' , (req,res) => {
+	res.render('autofillmessagesent')
+	
 })
 
+router.post('/autofillmessagesent' , (req,res) => {
+	if(req.body.action && req.body.action == 'Go back to listings' ) {
+		res.redirect('/listingsc')
+	}
+	
+}) 
 
 router.get('/nofavorites' , (req,res) => {
 	res.render('nofavorites')

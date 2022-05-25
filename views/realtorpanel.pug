@@ -7,9 +7,10 @@ html
 	link(rel = 'stylesheet' , href = '/css/styles.css')
 	
 	style.
+ 
 		body{
 			background-color: #cad297;
-		}
+    }
 		
 		input[type=submit] {
 		  border-radius: 25px;
@@ -33,33 +34,42 @@ html
 
 	body
 		 
+	.container
 		h1 Welcome #{name} !
 		
 		form(action = "/realtorpanel", method = "post")
-			div.actions
-				input(class="btn btn-md btn-secondary btn-block",type = "submit", name = "action" , value = "crud")
-				input(class="btn btn-md btn-secondary btn-block",type = "submit", name = "action" , value = "change password")
-				input(class="btn btn-md btn-secondary btn-block",type = "submit", name = "action" , value = "change phone number")
-				input(class="btn btn-md btn-secondary btn-block",type = "submit", name = "action" , value = "change email")
-				input(class="btn btn-md btn-secondary btn-block",type = "submit", name = "action" , value = "change agency")
-				input(class="btn btn-md btn-secondary btn-block",type = "submit", name = "action" , value = "go to listings")
-	br
-	
-	table
-		thead
-			tr
-				td Realtor ID
-				td First Name
-				td Last Name
-				td Agency
-				td Phone Number
-				td Email 
-		tbody  
-			tr 
-				td #{realtor.realtorid}
-				td #{realtor.first_name}
-				td #{realtor.last_name}
-				td #{realtor.agency}
-				td #{realtor.phone_number}
-				td #{realtor.email}  
+			div.actions 
+				input(class="btn btn-md btn-success btn-block",type = "submit", name = "action" , value = "crud")
+				input(class="btn btn-md btn-success btn-block",type = "submit", name = "action" , value = "change password")
+				input(class="btn btn-md btn-success btn-block",type = "submit", name = "action" , value = "change phone number")
+				input(class="btn btn-md btn-success btn-block",type = "submit", name = "action" , value = "change email")
+				input(class="btn btn-md btn-success btn-block",type = "submit", name = "action" , value = "change agency")
+				input(class="btn btn-md btn-success btn-block",type = "submit", name = "action" , value = "go to listings")
+
+		table#realtorinfo.table.table-hover.table-striped.table-bordered
+			thead
+				tr
+					td Realtor ID
+					td First Name
+					td Last Name
+					td Agency
+					td Phone Number
+					td Email 
+			tbody  
+				tr 
+					td #{realtor.realtorid}
+					td #{realtor.first_name}
+					td #{realtor.last_name}
+					td #{realtor.agency}
+					td #{realtor.phone_number}
+					td #{realtor.email} 
+					
+					script(src='https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css')
+						script(src='https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js')
+						
+						script.
+							$(document).ready(function() {
+								$('#realtorinfo').DataTable();
+							}); 
+ 
 

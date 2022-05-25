@@ -437,6 +437,7 @@ router.get('/realtorpanel', (req,res) => {
 		if(req.body.action && req.body.action == 'go to listings'){
 			res.redirect('/listingsr')
 		}  
+		
 	 
  })
  
@@ -640,6 +641,9 @@ router.post('/listingsc', (req,res) => {
 		}) 
 	}else if(req.body.action && req.body.action == 'My Favorites') {
 		 res.redirect('/favorites')
+	}
+	else if(req.body.action && req.body.action == 'Contact Us'){
+		res.redirect('/contactus')
 	}
 })
 

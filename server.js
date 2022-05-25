@@ -17,6 +17,7 @@ var current_username = "";
 var current_realtorID = 2;
 var addressID 
 var realtor = true;
+var customer_favorites = "";
 
 //for parsing application/json
 app.use(bodyParser.json());
@@ -576,16 +577,28 @@ router.get('/customerpanel', (req,res) => {
  }) 
  
  router.get('/listingsc', (req,res) => {
-	 
-	pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID` , (err,property_results) => {
-            console.log(err, property_results)
+	if (req.query.addressid != undefined) {
+		pool.query(`SELECT * FROM customer WHERE user_name = '${current_username}'`, (err,results) =>  {
+			var addaddress;
+			if (results.rows[0].favorites == null) {
+				addaddress = req.query.addressid
+			} else {
+				addaddress = results.rows[0].favorites + "," + req.query.addressid
+			}
+			//console.log(results.rows[0].favorites, addaddress)
+			//console.log("added "+req.query.addressid+" to " + addaddress)
+			pool.query(`UPDATE customer SET favorites = '${addaddress}' WHERE user_name = '${current_username}'`)
+			res.redirect('/listingsc')
+	})
+	} else {
+		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID` , (err,property_results) => {
+            console.log(customer_favorites)
           res.render('listingsc', {  
 		      properties: property_results.rows
-			}); 
-			
-	
-	});
- })
+		  })
+		})
+	}	
+});
 
 router.post('/listingsc', (req,res) => {
 	if(req.body.action && req.body.action == 'Order by Housing Type') {
@@ -625,25 +638,82 @@ router.post('/listingsc', (req,res) => {
 
 router.get('/favorites', (req,res) => {
 	pool.query(`SELECT * FROM customer WHERE user_name = '${current_username}'`, (err,results) =>  {
-		console.log(err, results)
-		var favorites;
-		if (!(results.rows) || results.rows.length == 0 || results.rows[0].favorites == null) {
-			res.redirect('/nofavorites')
-		}
-		else {
-			favorites = results.rows[0].favorites.split(',')
-			var properties = []
-			for (favorite in favorites) {
-				pool.query(`SELECT * FROM property WHERE propertyid = '${favorite}'`, (err, results) =>{
-					properties.push(results.rows[0])
+		customer_favorites = (results.rows[0].favorites) ? results.rows[0].favorites : ""
+		console.log(customer_favorites)
+		if (req.query.addressid != undefined) {
+
+			var favorites;
+			var deleteaddress;
+			if ((results.rows[0].favorites).slice(0,((String) (req.query.addressid)).length - 1) == req.query.addressid) {
+				deleteaddress = req.query.addressid
+			} else {
+				deleteaddress = "," + req.query.addressid
+			}
+			console.log(results.rows[0].favorites, deleteaddress)
+			favorites = (results.rows[0].favorites).replace(deleteaddress,'')
+			console.log("deleted something from " + favorites)
+			customer_favorites = favorites
+			pool.query(`UPDATE customer SET favorites = '${favorites}' WHERE user_name = '${current_username}'`)
+			res.redirect('/favorites')
+		} else {
+			//console.log("displaying favorites")
+			var favorites;
+			if (!(results.rows) || results.rows.length == 0 || results.rows[0].favorites == null) {
+				res.redirect('/nofavorites')
+			}
+			else {
+				favorites = ("('" + results.rows[0].favorites + "')").replaceAll(",","','")
+				//console.log(favorites)
+				pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE propertyid IN ${favorites}`, (err, results) =>{
+					//console.log(results.rows)
+					res.render('favorites', {  
+						properties : results.rows
+				 	 });
 				})
 			}
-			res.render('favorites', {  
-				properties : properties
-			  });
 		}
+
 	})
 })
+
+router.post('/favorites', (req,res) => {
+	favorites = ("('" + customer_favorites + "')").replaceAll(",","','")
+	if(req.body.action && req.body.action == 'Order by Housing Type') {
+		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE propertyid IN ${favorites} ORDER BY propertytype` , (err,results) =>  {
+			console.log(results)
+			res.render('favorites', {  
+		      properties: results.rows
+			}); 
+		})
+	}else if(req.body.action && req.body.action == 'Order by Price') {
+		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE propertyid IN ${favorites} ORDER BY price`, (err,results) =>  {
+			res.render('favorites', {  
+		      properties: results.rows
+			}); 
+		}) 
+	}else if(req.body.action && req.body.action == 'Order by Number of Bedrooms') {
+		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE propertyid IN ${favorites} ORDER BY num_bedroom`, (err,results) =>  {
+			res.render('favorites', {  
+		      properties: results.rows
+			}); 
+		}) 
+	}else if(req.body.action && req.body.action == 'Order by Number of Bathrooms') {
+		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE propertyid IN ${favorites} ORDER BY num_bathroom`, (err,results) =>  {
+			res.render('favorites', {  
+		      properties: results.rows
+			}); 
+		}) 
+	}else if(req.body.action && req.body.action == 'Order by Zip Code') {
+		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE propertyid IN ${favorites} ORDER BY zip`, (err,results) =>  {
+			res.render('favorites', {  
+		      properties: results.rows
+			}); 
+		}) 
+	}else if(req.body.action && req.body.action == 'Back to Listings') {
+		 res.redirect('/listingsc')
+	}
+})
+
 
 router.get('/nofavorites' , (req,res) => {
 	res.render('nofavorites')

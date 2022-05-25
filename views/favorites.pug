@@ -17,15 +17,16 @@ html
 		}
 		
 	body
-		h1 Customer Listings 
+		h1 My Favorites
 		
-		form(action = "/listingsc", method = "post")
+		form(action = "/favorites", method = "post")
 			div.actions 
 				input(class="btn btn-md btn-secondary btn-block", type = "submit", name = "action" , value = "Order by Housing Type")
 				input(class="btn btn-md btn-secondary btn-block", type = "submit", name = "action" , value = "Order by Price")
 				input(class="btn btn-md btn-secondary btn-block", type = "submit", name = "action" , value = "Order by Number of Bedrooms")
 				input(class="btn btn-md btn-secondary btn-block", type = "submit", name = "action" , value = "Order by Number of Bathrooms")
 				input(class="btn btn-md btn-secondary btn-block", type = "submit", name = "action" , value = "Order by Zip Code") 
+				input(class="btn btn-md btn-secondary btn-block", type = "submit", name = "action" , value = "Back to Listings") 
 	br
 
 	table
@@ -52,4 +53,6 @@ html
 					td #{property.city}
 					td #{property.state}
 					td #{property.zip} 
+					td 
+						a(href='/favorites?addressid='+property.propertyid) Delete
 

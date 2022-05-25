@@ -59,9 +59,8 @@ html
 					td Number of Bathroom 
 					td Street
 					td City 
-					td State 
+					td State  
 					td Zip
-					td Realtor Email
           
 			tbody
 				each property in properties
@@ -79,7 +78,6 @@ html
 						td #{property.city}
 						td #{property.state}
 						td #{property.zip}  
-						td #{property.email}
 						td
 							div.actions
 								a(class="btn btn-md btn-success btn-block", type = "submit", name = "action" , id = "contactRealtor", href ='/listingsc?addressid='+property.propertyid ) Favorite

@@ -6,59 +6,27 @@ html
 	link(rel = 'stylesheet' , href = '/css/bootstrap.min.css')
 	link(rel = 'stylesheet' , href = '/css/styles.css')
 	
-	style. 
-		body {
-			font-family: Arial, Helvetica, sans-serif, 20px ;
-			color: black;
-			margin        : 0;
-			padding       : 0;
-			background-color: #cad297;
+	style.
+		body{
+			background-image: url("2473757.jpg");
 		}
-		table {
-			
-			border: 3px solid #f1f1f1;
-			border-radius: 40px; 
-			border-color: grey;
-		}
-		tr {
-			border: 3px solid #f1f1f1;
-			border-radius: 40px;
-			border-color: grey;
-		}
-
-		td {
-			border: 3px solid #f1f1f1;
-			border-radius: 40px;
-			border-color: grey;	
-		}
-
+		
 		input[type=submit] {
 		  border-radius: 25px;
 		  
 		}
-
-		input[type=text] {
-			width: 100%;
-			padding: 12px 20px;
-			margin: 11px 0;
-			display: inline-block;
-			border: 1px solid #ccc;
-			box-sizing: border-box;
-		}
 		
 	body
-		h1 Customer Listings 
+		h1 My Favorites
 		
-		form(action = "/listingsc", method = "post")
+		form(action = "/favorites", method = "post")
 			div.actions 
 				input(class="btn btn-md btn-secondary btn-block", type = "submit", name = "action" , value = "Order by Housing Type")
 				input(class="btn btn-md btn-secondary btn-block", type = "submit", name = "action" , value = "Order by Price")
 				input(class="btn btn-md btn-secondary btn-block", type = "submit", name = "action" , value = "Order by Number of Bedrooms")
 				input(class="btn btn-md btn-secondary btn-block", type = "submit", name = "action" , value = "Order by Number of Bathrooms")
 				input(class="btn btn-md btn-secondary btn-block", type = "submit", name = "action" , value = "Order by Zip Code") 
-				input(class="btn btn-md btn-secondary btn-block", type = "submit", name = "action" , value = "My Favorites") 
-				input(class="btn btn-md btn-secondary btn-block", type = "submit", name = "action" , value = "Contact Us") 
-
+				input(class="btn btn-md btn-secondary btn-block", type = "submit", name = "action" , value = "Back to Listings") 
 	br
 
 	table
@@ -67,8 +35,8 @@ html
 				td Type
 				td Price
 				td Size (sq ft)
-				td # of Bedroom
-				td # of Bathroom 
+				td Number of Bedroom
+				td Number of Bathroom 
 				td Street
 				td City
 				td State
@@ -86,5 +54,5 @@ html
 					td #{property.state}
 					td #{property.zip} 
 					td 
-						a(href='/listingsc?addressid='+property.propertyid) Favorite
+						a(href='/favorites?addressid='+property.propertyid) Delete
 

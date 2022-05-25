@@ -2,96 +2,65 @@ doctype html
    
 html
     head 
-    title Login Form Design
-    
-
+    title Login
     style. 
-        body{
-            margin:0;
-            padding:0;
-            background-color: #cad297;
-            background-size:cover;
-            background-position:center ;
-            font-family:sans-serif;
+        form {
+            border: 3px solid #f1f1f1;
         }
-
-        .loginbox{
-            width:320px;
-            height:420px;
-            background: #000;
-            color: #fff;
-            top:50%;
-            left:50%;
-            position:absolute;
-            transform: translate(-50%,-50%);
-            box-sizing: border-box;
-            padding: 70px 30px;
-        }
-
-        .avatar{
-            width: 100px;
-            height:100px;
-            border-radius: 50%;
-            position: absolute;
-            top: -50px;
-            left: calc(50% - 50px);
-        }
-
-        h1{
-            margin: 0;
-            padding: 0 0 20px;
-            text-align: center;
-            font-size: 22px;
-        }
-
-        .loginbox p{
-            margin: 0;
-            padding: 0;
-            font-weight: bold;
-        }
-
-        .loginbox input{
+        h1 {text-align: center;}
+        body {
+                font-family: Arial, Helvetica, sans-serif;
+                color: white;
+                margin        : 0;
+                padding       : 0;
+                display       : grid;
+                place-content : center;
+                min-height    : 100vh;
+                background-color: #cad297;
+            }
+       
+        input[type=text], input[type=password] {
             width: 100%;
-            margin-bottom: 20px;
+            padding: 12px 20px;
+            margin: 11px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
         }
-
-        .loginbox input[type="text"], input[type="password"]
-        {
+        button {
+            background-color: #04AA6D;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
             border: none;
-            border-bottom: 1px solid #fff;
-            background: transparent;
-            outline: none;
-            height: 40px;
-            color: #fff;
-            font-size: 16px;
-        }
-
-        .loginbox input[type="submit"]{
-            border: none;
-            outline: none;
-            height: 40px;
-            background: #fb2525;
-            color: #fff;
-            font-size: 18px;
-            border-radius:20px ;
-        }
-
-        .loginbox input[type="submit"]:hover{
             cursor: pointer;
-            background: #ffc107;
-            color: #000;
+            width: 100%;
+       
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+        }
+       
+        input[type="submit"] {
+            display: block;
+            margin: 0 auto;
+            padding: 7px 14px;
         }
          
-    .loginbox
-        img.avatar(src='avatar.png')
-        h1 Login Here
-        
+     
+    body 
+        span.h0s(style={color: 'black', 'font-size': '30px', 'tab-size': 12 }) <strong> Login here: <strong>
+   
         form(action="/customerlogin", method="post")
-            p Username
-              input(type='text' name='' placeholder='Enter Username')
-            p Password
-              input(type='password' name='' placeholder='Enter Password')
-              input(type='submit' name='action' value='login')
- 
+           
+            div.input
+                span.h1(style={color: 'black', 'font-size': '16px', 'tab-size': 12 }) <strong>Username<strong>
+                input(type = "text", name = "username" )
 
+            div.input
+                span.h2(style={color: 'black', 'font-size': '16px', 'tab-size': 12 }) <strong>Password<strong>
+                input(type = "password" , name = "password")
 
+            div.actions
+                input( class="btn btn-lg btn-primary btn-block", type = "submit", name = "action", value = "login")
+                //input(type = "submit", name = "action", value = "register")

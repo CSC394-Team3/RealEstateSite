@@ -1,0 +1,11 @@
+doctype html
+
+html
+	head
+	title Message Sucessfully Sent
+	
+	body 
+		h1 Thank you for your message!  We will get back to you as soon as we can.
+		form(action="/messagesent",method="post") 
+			div.actions  
+				input(type = "submit", name = "action", value = "Go back to listings")

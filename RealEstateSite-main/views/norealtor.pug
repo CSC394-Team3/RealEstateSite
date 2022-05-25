@@ -1,0 +1,14 @@
+doctype html
+
+html
+	head
+	title Realtor Cannot Be Found
+	
+	body
+		h1 Realtor Not Found
+		h2 Please register or try again
+		
+		form(action="/norealtor",method="post")
+			div.actions 
+				input(type = "submit", name = "action" , value = "register")
+				input(type = "submit", name = "action", value = "try again")

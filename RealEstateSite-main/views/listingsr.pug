@@ -1,0 +1,41 @@
+doctype html
+
+html
+
+	body
+		h1 Realtor Listings 
+		
+		form(action = "/listingsr", method = "post")
+			div.actions 
+				input(type = "submit", name = "action" , value = "Order by Housing Type")
+				input(type = "submit", name = "action" , value = "Order by Price")
+				input(type = "submit", name = "action" , value = "Order by Number of Bedrooms")
+				input(type = "submit", name = "action" , value = "Order by Number of Bathrooms")
+				input(type = "submit", name = "action" , value = "Order by Zip Code") 
+	br
+
+	table
+		thead
+			tr
+				td Type
+				td Price
+				td Size (sq ft)
+				td Number of Bedroom
+				td Number of Bathroom 
+				td Street
+				td City
+				td State
+				td Zip
+		tbody
+			each property in properties
+				tr 
+					td #{property.propertytype}
+					td #{property.price}
+					td #{property.size}
+					td #{property.num_bedroom}
+					td #{property.num_bathroom}  
+					td #{property.street}
+					td #{property.city}
+					td #{property.state}
+					td #{property.zip} 
+

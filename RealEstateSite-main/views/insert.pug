@@ -1,0 +1,77 @@
+doctype html
+
+html
+	head
+	title Team #{teamNumber}
+body 
+
+	h2 Create Property 
+   
+	form(name="add-property", action="/insert", method="post") 
+		div.input
+			span.label Property Type
+			input(type="text", name="propertytype")
+
+		div.input
+			span.label Price
+			input(type="text", name="price")
+
+		div.input
+			span.label Size
+			input(type="text", name="size")
+
+		div.input
+			span.label Number of Bedroom
+			input(type="text", name="num_bedroom")
+
+		div.input
+			span.label Number of Bathroom
+			input(type="text", name="num_bathroom")
+ 
+		div.input
+			span.label Street Address
+			input(type="text", name="street")
+			
+		div.input
+			span.label City
+			input(type="text", name="city")
+			
+		div.input
+			span.label State
+			input(type="text", name="state")
+			
+		div.input
+			span.label Zip
+			input(type="text", name="zip")
+
+		div.actions
+			input(type="submit",name="action", value="add")
+			input(type="submit",name="action", value="delete")
+			input(type="submit",name="action", value="update")  
+ 
+	br
+
+	table
+		thead
+			tr
+				td Type
+				td Price
+				td Size (sq ft)
+				td Number of Bedroom
+				td Number of Bathroom 
+				td Street
+				td City
+				td State
+				td Zip
+		tbody
+			each property in properties
+				tr 
+					td #{property.propertytype}
+					td #{property.price}
+					td #{property.size}
+					td #{property.num_bedroom}
+					td #{property.num_bathroom}  
+					td #{property.street}
+					td #{property.city}
+					td #{property.state}
+					td #{property.zip}

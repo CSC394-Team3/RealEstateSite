@@ -39,12 +39,12 @@ if (process.env.DATABASE_URL != null){
 
    else{
    connectionParams = {
-       user: 'team3_user',
-	   host: 'localhost',
-  	   database: 'team3',
-  	   password: 'team3pass',
-  	   port: 5432 
-  }
+		user: 'team3_user',
+		host: 'localhost',
+		database: 'team3',
+		password: 'team3pass',
+		port: 5432 
+	}
 }
 
 
@@ -242,6 +242,15 @@ router.post('/realtorsignuperror' , (req,res) => {
 	} 
 	
 })
+
+router.get('/favorites' , (req,res) => {
+	res.render('favorites')
+})
+
+router.post('/favorites' , (req,res) => {
+	
+	
+}) 
 
 router.get('/invalid', (req,res) => {
 	res.render('invalidlogin')
@@ -646,7 +655,6 @@ router.post('/listingsc', (req,res) => {
 
 router.get('/favorites', (req,res) => {
 	pool.query(`SELECT * FROM customer WHERE user_name = '${current_username}'`, (err,results) =>  {
-		if (results.rows[0].favorites != null)
 		customer_favorites = (results.rows[0].favorites) ? results.rows[0].favorites : ""
 		console.log(customer_favorites)
 		if (req.query.addressid != undefined) {
@@ -729,6 +737,15 @@ router.post('/favorites', (req,res) => {
 	
 	
 })
+
+router.get('/favorites' , (req,res) => {
+	pool.query(`SELECT * FROM customer` , (err,property_results) => {
+            console.log(err, property_results) 
+			res.render('favorites', {  
+		      properties: property_results.rows
+			});   
+	});   
+}) 
 
 router.get('/contactus' , (req,res) => {
 	res.render('contactus')

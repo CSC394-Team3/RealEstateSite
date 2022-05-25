@@ -3,12 +3,70 @@ doctype html
 html
 	head
 	title Contact Us
+
+	style.
+		body {
+			font-family: Arial, Helvetica, sans-serif;
+			color: black;
+			margin        : 0;
+			padding       : 0;
+			background-color: #cad297;
+		}
+		
+		input[type=submit] {
+		  border-radius: 25px;
+		  
+		}
+
+		input[type=text], input[type=password] {  
+			width: 100%;
+			padding: 12px 20px;
+			margin: 11px 0;
+			display: inline-block;
+			border: 1px solid #ccc;
+			box-sizing: border-box;
+			}
+		button {
+			background-color: black;
+			color: white;
+			padding: 14px 20px;
+			margin: 8px 0;
+			border: none;
+			cursor: pointer;
+			width: 100%;
+		
+			display: table-cell;
+			text-align: center;
+			vertical-align: middle;
+		}
+		
+		input[type="submit"] {
+			display: block;
+			margin: 0 auto;
+			padding: 7px 14px;
+		}
+		 
+		
+		
+		label {
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-end;
+			text-align: right;
+			width: 400px;
+			line-height: 26px;
+			margin-bottom: 10px;  
+		}
 	
 	body 
 		
 		form(action="/contactus",method="post")
 			div.input
-				span.label Please type your message here: 
+				span.h1(style={color: 'black', 'font-size': '16px', 'tab-size': 24 }) <strong>Please type your message here: <strong>
 				textarea(name="message", id="message")
 			div.actions  
 				input(type = "submit", name = "action", value = "done")
+
+	
+
+			

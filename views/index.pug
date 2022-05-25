@@ -2,57 +2,39 @@ doctype html
    
 html
 
-	head
-	title Willow
-      
-	// stylesheet
-	link(rel = 'stylesheet' , href = '/css/bootstrap.min.css')
-	link(rel = 'stylesheet' , href = '/css/styles.css')
-	link(rel = 'stylesheet', href='index_style.css') 
+    head
+    title Willow
 
-	style.
-		input[type=submit] {
-			border-radius: 25px; 
-		}
- 
-	// Header
-	.header
-		img(src='Logo_banner.png', style='display: block; margin-right: auto;  width: 10%;')
-		.header-right
-            a.active(href='index.pug') Home
-			a(href='contactus.pug') Contact
-			a(href='about.pug') About
-			.dropdown
-                button.dropbtn
-                | Log in
-                i.fa.fa-caret-down
-                .dropdown-content
-                    a(href='customerlogin.pug') Customer
-                    a(href='realtorlogin.pug') Realtor
-            .dropdown
-                button.dropbtn
-                | Sign up
-                i.fa.fa-caret-down
-                .dropdown-content
-                    a(href='customersignup.pug') New Customer
-                    a(href='realtorsignup.pug') New Realtor
- 
-	// image banner
-	.image_banner
+    // stylesheet
+    link(rel = 'stylesheet' , href = '/css/bootstrap.min.css')
+    link(rel = 'stylesheet' , href = '/css/styles.css')
+    link(rel = 'stylesheet', href='index_style.css') 
+
+    style.
+        input[type=submit] {
+        border-radius: 25px; 
+        }
+    
+     //Header
+    .header
+        img(src='Logo_banner.png', style='display: block; margin-right: auto;  width: 20%;')
+
+    //image banner
+    .image_banner
         a.text_banner Find your dream home today
 
     
-//	body
-//		p(style='text-align:center;') Please choose a login option:
-//		form(action='/login', method='post', style='margin: auto; width: 150px;')
-//			div.actions
-//				input(class="btn btn-sm btn-secondary btn-block", type='submit', name='action', value='customer')
-//				input(class="btn btn-sm btn-secondary btn-block", type='submit', name='action', value='realtor')
-//   
-//		p(style='text-align:center;') Or sign up here: 
-//		form(action='/register', method='post', style='margin: auto; width: 150px;')
-//			div.actions
-//				input(class="btn btn-sm btn-secondary btn-block", type='submit', name='action', value='customer')
-//				input(class="btn btn-sm btn-secondary btn-block", type='submit', name='action', value='realtor')
- 
+    body
+        p(style='text-align:center;') Please choose a login option:
+        form(action='/login', method='post', style='margin: auto; width: 150px;')
+            div.actions
+                input(class="btn btn-sm btn-secondary btn-block", type='submit', name='action', value='customer')
+                input(class="btn btn-sm btn-secondary btn-block", type='submit', name='action', value='realtor')
+
+        p(style='text-align:center;') Or sign up here: 
+        form(action='/register', method='post', style='margin: auto; width: 150px;')
+            div.actions
+                input(class="btn btn-sm btn-secondary btn-block", type='submit', name='action', value='customer')
+                input(class="btn btn-sm btn-secondary btn-block", type='submit', name='action', value='realtor')
+
 	

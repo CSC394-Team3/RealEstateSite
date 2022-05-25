@@ -51,9 +51,9 @@ else{
 console.log(connectionParams)
 const pool = new pg.Client(connectionParams)
 
-pool.connect(err => {
-    if (err) throw err; 
-});
+//pool.connect(err => {
+    //if (err) throw err; 
+//});
  
 router.get('/', (req, res) => {
   res.render('index', { title: 'Willow' });

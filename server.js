@@ -391,6 +391,7 @@ router.get('/realtorpanel', (req,res) => {
 	
 	pool.query(`SELECT * FROM realtor WHERE user_name = '${current_username}'`, (err,realtor_results) => {
             console.log(err, realtor_results)
+			current_realtorID = realtor_results.rows[0].realtorid
          
              res.render('realtorpanel', { 
                      name: current_username,
@@ -440,7 +441,7 @@ router.get('/realtorpanel', (req,res) => {
  })
  
 router.get('/listingsr', (req,res) => {
-	pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE realtorID = '${current_realtorID}' ` , (err,property_results) => {
+	pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE realtorid = '${current_realtorID}' ` , (err,property_results) => {
             console.log(err, property_results)
           res.render('listingsr', {  
 		      properties: property_results.rows
@@ -452,31 +453,31 @@ router.get('/listingsr', (req,res) => {
 
 router.post('/listingsr', (req,res) => {
 	if(req.body.action && req.body.action == 'Order by Housing Type') {
-		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID ORDER BY propertytype` , (err,results) =>  {
+		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE realtorid = '${current_realtorID}' ORDER BY propertytype` , (err,results) =>  {
 			res.render('listingsr', {  
 		      properties: results.rows
 			}); 
 		})
 	}else if(req.body.action && req.body.action == 'Order by Price') {
-		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID ORDER BY price`, (err,results) =>  {
+		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE realtorid = '${current_realtorID}' ORDER BY price`, (err,results) =>  {
 			res.render('listingsr', {  
 		      properties: results.rows
 			}); 
 		}) 
 	}else if(req.body.action && req.body.action == 'Order by Number of Bedrooms') {
-		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID ORDER BY num_bedroom`, (err,results) =>  {
+		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE realtorid = '${current_realtorID}' ORDER BY num_bedroom`, (err,results) =>  {
 			res.render('listingsr', {  
 		      properties: results.rows
 			}); 
 		}) 
 	}else if(req.body.action && req.body.action == 'Order by Number of Bathrooms') {
-		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID ORDER BY num_bathroom`, (err,results) =>  {
+		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE realtorid = '${current_realtorID}' ORDER BY num_bathroom`, (err,results) =>  {
 			res.render('listingsr', {  
 		      properties: results.rows
 			}); 
 		}) 
 	}else if(req.body.action && req.body.action == 'Order by Zip Code') {
-		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID ORDER BY zip`, (err,results) =>  {
+		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE realtorid = '${current_realtorID}' ORDER BY zip`, (err,results) =>  {
 			res.render('listingsr', {  
 		      properties: results.rows
 			}); 

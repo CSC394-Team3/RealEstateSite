@@ -59,9 +59,8 @@ html
 					td Number of Bathroom 
 					td Street
 					td City 
-					td State 
+					td State  
 					td Zip
-					td Realtor Email
           
 			tbody
 				each property in properties
@@ -78,8 +77,8 @@ html
 						td #{property.street}
 						td #{property.city}
 						td #{property.state}
-						td #{property.zip}  
-						td #{property.email}
+						td #{property.zip}   
+						
 						td 
 							a(href='/listingsc?addressid='+property.propertyid) Favorite
 						

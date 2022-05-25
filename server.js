@@ -38,17 +38,13 @@ if (process.env.DATABASE_URL != null){
 
 else{ 
    connectionParams = {
-       host: 'willowrealestate.postgres.database.azure.com',
-       user: 'team5',
-      password: 'Willow5!',
-      database: 'postgres',
-      port: 5432 ,
-    ssl: true
+       user: 'team3_user',
+   	host: 'localhost',
+  	database: 'team3',
+  	password: 'team3pass',
+  	port: 5432
   } 
-		
-		 
-	} 
-
+}
 
 
 
@@ -91,13 +87,12 @@ router.get('/insert', (req,res) => {
 	
 	
 	
-}) 
+})  
 
- 
-router.post('/insert', (req, res) => {  
+router.post('/insert',   (req, res) => {  
 	if(req.body.action && req.body.action == 'add'){
-		var addAddress = `INSERT INTO address (street, city, state, zip) VALUES ( '${req.body.street}', '${req.body.city}', '${req.body.state}', '${req.body.zip}' ) ON conflict do nothing RETURNING addressID ` 
-		
+		var addAddress = `INSERT INTO address (street, city, state, zip) VALUES ( '${req.body.street}', '${req.body.city}', '${req.body.state}', '${req.body.zip}' ) ON conflict do nothing RETURNING  addressID` 
+	
 		pool.query(addAddress, (err,result) => {
 			if( !result ) { return }
 			    addressID = result.rows[0].addressid 
@@ -105,14 +100,20 @@ router.post('/insert', (req, res) => {
 				var insertProperty = `INSERT INTO property (propertyType, price, size, num_bedroom, num_bathroom,realtorID, addressID) VALUES ('${req.body.propertytype}', '${req.body.price}','${req.body.size}','${req.body.num_bedroom}','${req.body.num_bathroom}','${current_realtorID}', '${addressID}')`
 			
 					pool.query(insertProperty, (err, result) => {
-					console.log(err, result) 
-					res.redirect('/insert')
+						console.log(err, result) 
+						res.redirect('/insert') 
+					})  
+			}) 
 		
-					}) 
-				
-			})
-			 
-		} 
+			
+		var insertProperty = `INSERT INTO property (propertyType, price, size, num_bedroom, num_bathroom,realtorID, addressID) VALUES ('${req.body.propertytype}', '${req.body.price}','${req.body.size}','${req.body.num_bedroom}','${req.body.num_bathroom}','${current_realtorID}', '${addressID}')`
+			
+			
+		pool.query(insertProperty, (err, result) => {
+			console.log(err, result) 
+			res.redirect('/insert') 
+		})   
+	}
 		  
 	if(req.body.action && req.body.action == 'update'){ 
 	
@@ -122,7 +123,7 @@ router.post('/insert', (req, res) => {
 		if(result.rows.length == 0){
 			return
 		}else{
-			addressID = result.rows[0].addressID 
+			addressID = result.rows[0].addressid 
 			
 			var updateProperty = `UPDATE property SET propertyType = '${req.body.propertytype}', price = '${req.body.price}', size='${req.body.size}', num_bedroom = '${req.body.num_bedroom}', num_bathroom = '${req.body.num_bathroom}' WHERE addressID = '${addressID}'`
 	
@@ -437,7 +438,7 @@ router.get('/realtorpanel', (req,res) => {
  })
  
 router.get('/listingsr', (req,res) => {
-	pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID` , (err,property_results) => {
+	pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE realtorID = '${current_realtorID}' ` , (err,property_results) => {
             console.log(err, property_results)
           res.render('listingsr', {  
 		      properties: property_results.rows
@@ -618,7 +619,33 @@ router.post('/listingsc', (req,res) => {
 		      properties: results.rows
 			}); 
 		}) 
+	}else if(req.body.action && req.body.action == 'Contact Us') {
+		res.redirect('/contactus') 
 	}
+	
+})
+
+router.get('/contactus' , (req,res) => {
+	res.render('contactus')
+})
+
+router.post('/contactus' , (req,res) => {
+	if(req.body.action && req.body.action == 'done' ){
+		res.redirect('messagesent')
+	}
+	
+})
+
+router.get('/messagesent' , (req,res) => {
+	res.render('messagesent')
+	
+})
+
+router.post('/messagesent' , (req,res) => {
+	if(req.body.action && req.body.action == 'Go back to listings' ) {
+		res.redirect('/listingsc')
+	}
+	
 })
 
 

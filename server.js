@@ -1,110 +1,157 @@
-const app = require('./server');
-
+const express = require('express')
+const app = express()
+const bodyParser = require('body-parser');
 const port = process.env.PORT || 3000
+const router = express.Router();
+const path = require('path') 
+const pg = require('pg')
+const bcrypt = require('bcrypt') 
+const { body, validationResult } = require('express-validator'); 
 
-//<<<<<<< HEAD
-//=======
 //Set location for accessing files
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Set the view engine for the express app  
 app.set("view engine", "pug")
 var current_username = "";
-var current_realtorID = -1;
+var current_realtorID = 2;
+var addressID 
 var realtor = true;
 
 //for parsing application/json
 app.use(bodyParser.json());
 app.use(express.json())
 
-const users = []
 //for parsing application/xwww-
 app.use(bodyParser.urlencoded({ extended:true }));
 //form-urlencoded
 
-//Database
-const Pool = require('pg')
+const Pool = require('pg').Pool
 
 var connectionParams =  null;
 if (process.env.DATABASE_URL != null){
     connectionParams = {
-		connectionString: process.env.DATABASE_URL,
-		ssl: { rejectUnauthorized: false }
+        connectionString: process.env.DATABASE_URL,
+        ssl: { rejectUnauthorized: false }
     } 
 }
 
-else{
+else{ 
    connectionParams = {
-	user: 'team3_user',
+       user: 'team3_user',
    	host: 'localhost',
   	database: 'team3',
   	password: 'team3pass',
   	port: 5432
-  }
+  } 
 }
+
+
 
 console.log(connectionParams)
 const pool = new pg.Client(connectionParams)
-/*
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
-*/
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Willow' });
+pool.connect(err => {
+    if (err) throw err; 
 });
-	
-router.get('/users', (req, res) => {
-	res.json(users)
-}) 
+ 
+router.get('/', (req, res) => {
+  res.render('index', { title: 'Willow' });
+})
 
-router.post('/users' , async (req,res) => {
-	try{
-		const myPassword = await bcrypt.has(req.body.password,10);
-		const user = { name: req.body.name, password: myPassword}
-		users.push(user)
-		res.status(201).send()
-	} catch{
-		res.status(500).send()
-	}
+	
+ 
+router.post('/',
+		(req,res) => {
+		
+		const errors = validationResult(req);
+		if(!errors.isEmpty()) {
+			return res.status(400).send({ errors: errors.array() });
+		}
+		
+		res.redirect('/')
 
 })
 
-router.post('/users/login', async(req,res) => {
-	const user = users.find(user => user.name  === req.body.name)
-	if(user == null){
-		return res.status(400).send('Cannot find user')
-		
-	}try{
-		if(await bcrypt.compare(req.body.password,user.password)){
-			res.send('Success')
-		}else{
-			res.send('Not Allowed')
-		}
-	}catch{
-		res.status(500).send()
-		
-	}
-	
-}) 
-
-router.get('/insert', (req,res) => {
-	
-	pool.query(`SELECT * FROM property`, (err,property_results) => {
+router.get('/insert', (req,res) => {  
+	 
+	pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID` , (err,property_results) => {
             console.log(err, property_results)
-         
-            res.render('insert', { 
-                      teamNumber: 3, 
+          res.render('insert', {  
 		      properties: property_results.rows
-			});
+			}); 
 			
 	
 	});
-})
+	 
+	
+	
+	
+})  
+
+router.post('/insert',   (req, res) => {  
+	if(req.body.action && req.body.action == 'add'){
+		var addAddress = `INSERT INTO address (street, city, state, zip) VALUES ( '${req.body.street}', '${req.body.city}', '${req.body.state}', '${req.body.zip}' ) ON conflict do nothing RETURNING  addressID` 
+	
+		pool.query(addAddress, (err,result) => {
+			if( !result ) { return }
+			    addressID = result.rows[0].addressid 
+				console.log(err,result)
+				var insertProperty = `INSERT INTO property (propertyType, price, size, num_bedroom, num_bathroom,realtorID, addressID) VALUES ('${req.body.propertytype}', '${req.body.price}','${req.body.size}','${req.body.num_bedroom}','${req.body.num_bathroom}','${current_realtorID}', '${addressID}')`
+			
+					pool.query(insertProperty, (err, result) => {
+						console.log(err, result) 
+						res.redirect('/insert') 
+					})  
+			}) 
+		
+			
+		var insertProperty = `INSERT INTO property (propertyType, price, size, num_bedroom, num_bathroom,realtorID, addressID) VALUES ('${req.body.propertytype}', '${req.body.price}','${req.body.size}','${req.body.num_bedroom}','${req.body.num_bathroom}','${current_realtorID}', '${addressID}')`
+			
+			
+		pool.query(insertProperty, (err, result) => {
+			console.log(err, result) 
+			res.redirect('/insert') 
+		})   
+	}
+		  
+	if(req.body.action && req.body.action == 'update'){ 
+	
+	var updateAddress = `UPDATE address SET street = '${req.body.street}', city = '${req.body.city}', state = '${req.body.state}', zip = '${req.body.zip}' RETURNING addressID`
+	
+	pool.query(updateAddress , (err,result) => {
+		if(result.rows.length == 0){
+			return
+		}else{
+			addressID = result.rows[0].addressid 
+			
+			var updateProperty = `UPDATE property SET propertyType = '${req.body.propertytype}', price = '${req.body.price}', size='${req.body.size}', num_bedroom = '${req.body.num_bedroom}', num_bathroom = '${req.body.num_bathroom}' WHERE addressID = '${addressID}'`
+	
+			pool.query( updateProperty , (err,result) => {
+			console.log(err, result)
+
+			res.redirect('/insert')
+				
+			})
+		}
+	})
+
+	
+	
+}
+
+	if(req.body.action && req.body.action == 'delete'){ 
+		pool.query(`DELETE FROM property WHERE addressID = '${addressID}'`, (err,result) => { 
+		console.log(err, result) 
+		
+		res.redirect('/insert')
+		
+		})
+	}
+}) 
 
 router.get('/register', (req,res) => { 
-	res.render('/register')
+	res.render('register')
 }) 
 
 router.post('/register', (req,res) => {
@@ -120,38 +167,78 @@ router.post('/register', (req,res) => {
 })
 
 
-router.get('/customersignup', (req,res) => {
+router.get('/customersignup',  (req,res) => {
 	res.render('customersignup')
 
 })
 
-router.post('/customersignup' , (req,res) => {
+router.post('/customersignup' ,   async (req,res) => {
 	
-	pool.query(`INSERT INTO customer(user_name,password,first_name,last_name,phone_number,email)
-		VALUES ( '${req.body.username}', '${req.body.password}', '${req.body.firstName}', '${req.body.lastName}', '${req.body.phoneno}', '${req.body.email}' ) 
-	 `, (err, result) => {
-		 current_username = req.body.username;
-		res.redirect('/customerpanel')
+	
+	if( !req.body.username || !req.body.password || !req.body.firstName || !req.body.lastName || !req.body.phoneno || !req.body.email){
 		
-		} ); 
+		res.redirect('/customersignuperror')
+	}else{
+	 
+	  const hp = await bcrypt.hash(req.body.password, 10)   
+	 
+	 pool.query(`INSERT INTO customer(user_name,password,first_name,last_name,phone_number,email)
+		VALUES ( '${req.body.username}', '${hp}', '${req.body.firstName}', '${req.body.lastName}', '${req.body.phoneno}', '${req.body.email}' ) `, (err, result) => {
+		 current_username = req.body.username; 
+		 
+		 res.redirect('/customerlogin')
+		 
+		 } );  
+		
+	}
 	
 })
+
+router.get('/customersignuperror' , (req,res) => {
+	res.render('customersignuperror')
+	
+})
+
+router.post('/customersignuperror', (req,res) => {
+	if( req.body.action && req.body.action == 'try again' ){ 
+		  res.redirect('/customersignup')
+	} 
+})
+	
 
 router.get('/realtorsignup', (req,res) => {
 	res.render('realtorsignup')
 	
 })
 
-router.post('/realtorsignup', (req,res) => {
+router.post('/realtorsignup', async (req,res) => {
+	if( !req.body.realtorID || !req.body.username || !req.body.password || !req.body.agency || !req.body.firstName ||
+	 !req.body.lastName || !req.body.phoneno || !req.body.email)  
+	 
+	 return res.redirect('/realtorsignuperror')
+	
+	const hp = await bcrypt.hash(req.body.password, 10)
+	
 	pool.query(`INSERT INTO realtor(realtorID, user_name,password, agency, first_name,last_name,phone_number,email)
-		VALUES ( '${req.body.realtorID}' ,'${req.body.username}', '${req.body.password}', '${req.body.agency}','${req.body.firstName}', '${req.body.lastName}', '${req.body.phoneno}', '${req.body.email}' ) 
+		VALUES ( '${req.body.realtorID}' ,'${req.body.username}', '${hp}', '${req.body.agency}','${req.body.firstName}', '${req.body.lastName}', '${req.body.phoneno}', '${req.body.email}' ) 
 	 `, (err, result) => {
 		 current_realtorID = req.body.realtorID;
 		 current_username = req.body.username;
-		res.redirect('/realtorpanel')
+		res.redirect('/realtorlogin')
 		
 		} ); 
 	
+	
+})
+
+router.get('/realtorsignuperror' , (req,res) => { 
+	 res.render('realtorsignuperror')
+}) 
+
+router.post('/realtorsignuperror' , (req,res) => {
+	if( req.body.action && req.body.action == 'try again' ){ 
+		  res.redirect('/realtorsignup')
+	} 
 	
 })
 
@@ -161,7 +248,11 @@ router.get('/invalid', (req,res) => {
 })
 
 router.post('/invalid', (req,res) => { 
-	res.redirect('/')
+	if(realtor){
+		res.redirect('/realtorlogin')
+	}else{
+		res.redirect('/customerlogin')
+	}
 	
 })
  
@@ -188,19 +279,22 @@ router.get('/customerlogin', (req,res) => {
 
 
 
-router.post('/customerlogin', (req,res) => { 
-
+router.post('/customerlogin',    (req,res) => { 
+ 
+realtor = false
 //check user name and password with db
 	if(req.body.action && req.body.action == 'login'){
  		current_username = req.body.username;
 			 pool.query(`SELECT * FROM CUSTOMER WHERE user_name = '${req.body.username}'`, (err,result) => {
-				console.log(err,result)
-				result.rows[0] 
+				console.log(err,result) 
 				
+				if(result.rows.length == 0) {
+					res.redirect('/nocustomer') 
+				}
 				if(result.rows.length > 0){
 					var password = result.rows[0].password
 					
-					if(req.body.password == password){
+					if(  bcrypt.compareSync(req.body.password, password) ){
 						res.redirect('/customerpanel')
 					}else{
 						
@@ -219,6 +313,32 @@ router.post('/customerlogin', (req,res) => {
 	
  })
 
+router.get('/nocustomer' , (req,res) => {
+	res.render('nocustomer')
+})
+
+router.post('/nocustomer' , (req,res) => {
+	if(req.body.action && req.body.action == 'try again')
+		res.redirect('/customerlogin')
+	if(req.body.action && req.body.action == 'register')
+		res.redirect('/customersignup')
+	
+	
+})
+
+router.get('/norealtor' , (req,res) => {
+	res.render('norealtor')
+})
+
+router.post('/norealtor' , (req,res) => {
+	if(req.body.action && req.body.action == 'try again')
+		res.redirect('/realtorlogin')
+	if(req.body.action && req.body.action == 'register')
+		res.redirect('/realtorsignup')
+	
+	
+})
+
 router.get('/realtorlogin', (req,res) => {
 	res.render('realtorlogin')
 	
@@ -227,18 +347,23 @@ router.get('/realtorlogin', (req,res) => {
 
 router.post('/realtorlogin', (req,res) => { 
 
+realtor = true
+
 //check user name and password with db
 	if(req.body.action && req.body.action == 'login'){
 		   
 			current_username = req.body.username;
 			 pool.query(`SELECT * FROM realtor WHERE user_name = '${req.body.username}'`, (err,result) => {
 				console.log(err,result)
-				result.rows[0] 
+				
+				if(result.rows.length == 0)
+					res.redirect('/norealtor') 
 				
 				if(result.rows.length > 0){
 					var password = result.rows[0].password
 					
-					if(req.body.password == password){
+					if( bcrypt.compareSync(req.body.password, password) ){
+						current_realtorID = result.rows[0].realtorID
 						res.redirect('/realtorpanel')
 					}else{
 						 res.redirect('/invalid') 
@@ -259,50 +384,6 @@ router.post('/realtorlogin', (req,res) => {
  })
 
 
-
-
-router.post('/insert', (req, res) => {  
-	if(req.body.action && req.body.action == 'add'){
-	pool.query(`INSERT INTO property (propertyType, price, size, num_bedroom, num_bathroom,addressID) VALUES ('${req.body.propertytype}', '${req.body.price}','${req.body.size}','${req.body.num_bedroom}','${req.body.num_bathroom}','${req.body.addressID}')` , (err, result) => {
-	console.log(err, result)
-
-	res.redirect('/insert')
-	
-		})
-	}
-	
-	if(req.body.action && req.body.action == 'update'){ 
-	pool.query(`UPDATE property SET propertyType = '${req.body.propertytype}', price = '${req.body.price}', size='${req.body.size}', num_bedroom = '${req.body.num_bedroom}', num_bathroom = '${req.body.num_bathroom}' WHERE addressID = '${req.body.addressID}'`, (err,result) => {
-	console.log(err, result)
-
-	res.redirect('/insert')
-		
-	})
-}
-
-	if(req.body.action && req.body.action == 'delete'){ 
-		pool.query(`DELETE FROM property WHERE addressID = '${req.body.addressID}'`, (err,result) => { 
-		console.log(err, result) 
-		
-		res.redirect('/insert')
-		
-		})
-	}
-})
-
-router.post('/users', (req, res) => {
-	const user = { name: req.body.name, password: req.body.password }
-	users.push(user)
-	res.status(201).send()
-})
-
-router.post('/users/login',(req,res) => {
-	const user = users.find(user => user.name = req.body.name)
-	if (user == null) {
-		return res.status(400).send('Cannot find user')
-	}
-})
-
  
 router.get('/realtorpanel', (req,res) => {
 	
@@ -319,39 +400,89 @@ router.get('/realtorpanel', (req,res) => {
  
  router.post('/realtorpanel', (req,res) => {
 	 
-	if(req.body.action && req.body.action == 'crud'){
-		res.redirect('/insert')
-	}
-	
-	if(req.body.action && req.body.action == 'change password'){
-		res.redirect('/realtorchangepassword')
-			
-	}   
-	
-	if(req.body.action && req.body.action == 'change password'){
-		res.redirect('/realtorchangephoneno')
-			
-	} 
-	
-	
-	
-	if(req.body.action && req.body.action == 'change email'){
-		res.redirect('/realtorchangeemail')
-			
-	} 
-	
+		if(req.body.action && req.body.action == 'crud'){
+			res.redirect('/insert')
+		}
 		
-	if(req.body.action && req.body.action == 'change agency'){
-		res.redirect('/realtorchangeagency')
+		if(req.body.action && req.body.action == 'change password'){
+			res.redirect('/realtorchangepassword')
+				
+		}   
+		
+		if(req.body.action && req.body.action == 'change password'){
+			res.redirect('/realtorchangephoneno')
+				
+		} 
+		
+		
+		
+		if(req.body.action && req.body.action == 'change email'){
+			res.redirect('/realtorchangeemail')
+				
+		} 
+		
 			
-	} 
-	
-	if(req.body.action && req.body.action == 'change phone number'){
-		res.redirect('/realtorchangephoneno')
-			
-	} 
+		if(req.body.action && req.body.action == 'change agency'){
+			res.redirect('/realtorchangeagency')
+				
+		} 
+		
+		if(req.body.action && req.body.action == 'change phone number'){
+			res.redirect('/realtorchangephoneno')
+		}		
+				
+		if(req.body.action && req.body.action == 'go to listings'){
+			res.redirect('/listingsr')
+		}  
 	 
  })
+ 
+router.get('/listingsr', (req,res) => {
+	pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE realtorID = '${current_realtorID}' ` , (err,property_results) => {
+            console.log(err, property_results)
+          res.render('listingsr', {  
+		      properties: property_results.rows
+			}); 
+			
+	
+	});
+ })
+
+router.post('/listingsr', (req,res) => {
+	if(req.body.action && req.body.action == 'Order by Housing Type') {
+		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID ORDER BY propertytype` , (err,results) =>  {
+			res.render('listingsr', {  
+		      properties: results.rows
+			}); 
+		})
+	}else if(req.body.action && req.body.action == 'Order by Price') {
+		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID ORDER BY price`, (err,results) =>  {
+			res.render('listingsr', {  
+		      properties: results.rows
+			}); 
+		}) 
+	}else if(req.body.action && req.body.action == 'Order by Number of Bedrooms') {
+		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID ORDER BY num_bedroom`, (err,results) =>  {
+			res.render('listingsr', {  
+		      properties: results.rows
+			}); 
+		}) 
+	}else if(req.body.action && req.body.action == 'Order by Number of Bathrooms') {
+		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID ORDER BY num_bathroom`, (err,results) =>  {
+			res.render('listingsr', {  
+		      properties: results.rows
+			}); 
+		}) 
+	}else if(req.body.action && req.body.action == 'Order by Zip Code') {
+		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID ORDER BY zip`, (err,results) =>  {
+			res.render('listingsr', {  
+		      properties: results.rows
+			}); 
+		}) 
+	}
+	
+})
+
 
 router.get('/realtorchangeagency', (req,res) => {
 	res.render('realtorchangeagency')
@@ -438,8 +569,85 @@ router.get('/customerpanel', (req,res) => {
 		res.redirect('/customerchangephoneno')
 			
 	} 
+	
+	if(req.body.action && req.body.action == 'go to listings') {
+		res.redirect('/listingsc')
+	}
 	 
  }) 
+ 
+ router.get('/listingsc', (req,res) => {
+	 
+	pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID` , (err,property_results) => {
+            console.log(err, property_results)
+          res.render('listingsc', {  
+		      properties: property_results.rows
+			}); 
+			
+	
+	});
+ })
+
+router.post('/listingsc', (req,res) => {
+	if(req.body.action && req.body.action == 'Order by Housing Type') {
+		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID ORDER BY propertytype` , (err,results) =>  {
+			res.render('listingsc', {  
+		      properties: results.rows
+			}); 
+		})
+	}else if(req.body.action && req.body.action == 'Order by Price') {
+		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID ORDER BY price`, (err,results) =>  {
+			res.render('listingsc', {  
+		      properties: results.rows
+			}); 
+		}) 
+	}else if(req.body.action && req.body.action == 'Order by Number of Bedrooms') {
+		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID ORDER BY num_bedroom`, (err,results) =>  {
+			res.render('listingsc', {  
+		      properties: results.rows
+			}); 
+		}) 
+	}else if(req.body.action && req.body.action == 'Order by Number of Bathrooms') {
+		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID ORDER BY num_bathroom`, (err,results) =>  {
+			res.render('listingsc', {  
+		      properties: results.rows
+			}); 
+		}) 
+	}else if(req.body.action && req.body.action == 'Order by Zip Code') {
+		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID ORDER BY zip`, (err,results) =>  {
+			res.render('listingsc', {  
+		      properties: results.rows
+			}); 
+		}) 
+	}else if(req.body.action && req.body.action == 'Contact Us') {
+		res.redirect('/contactus') 
+	}
+	
+})
+
+router.get('/contactus' , (req,res) => {
+	res.render('contactus')
+})
+
+router.post('/contactus' , (req,res) => {
+	if(req.body.action && req.body.action == 'done' ){
+		res.redirect('messagesent')
+	}
+	
+})
+
+router.get('/messagesent' , (req,res) => {
+	res.render('messagesent')
+	
+})
+
+router.post('/messagesent' , (req,res) => {
+	if(req.body.action && req.body.action == 'Go back to listings' ) {
+		res.redirect('/listingsc')
+	}
+	
+})
+
 
 router.get('/customerchangepassword' , (req,res) => {
 	res.render('customerchangepassword')
@@ -474,11 +682,4 @@ router.post('/customerchangephoneno', (req,res) => {
 })
 
 app.use('/',router);
-//>>>>>>> a484981baf12c5131771f4a83bcbd2c315bbbdfd
-
-module.exports = app;
-
-/*
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-}) */
+module.exports = app

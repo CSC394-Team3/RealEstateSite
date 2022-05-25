@@ -27,30 +27,28 @@ app.use(express.json())
 app.use(bodyParser.urlencoded({ extended:true }));
 //form-urlencoded
 
-//Database
 const Pool = require('pg').Pool
 
 var connectionParams =  null;
- 
+if (process.env.DATABASE_URL != null){
     connectionParams = {
-
-		/**
-		user: 'team3_user',
-		host: 'localhost',
-		database: 'team3',
-		password: 'team3pass',
-		port: 5432 
-		**/
-		
-		
-		host: 'willowrealestate.postgres.database.azure.com',
-        user: 'team5',
-        password: 'Willow5!',
-        database: 'postgres',
-        port: 5432 ,
-        ssl: true
-		 
+        connectionString: process.env.DATABASE_URL,
+        ssl: { rejectUnauthorized: false }
+    } 
 }
+
+   else{
+   connectionParams = {
+       host: 'willowrealestate.postgres.database.azure.com',
+       user: 'team5',
+       password: 'Willow5!',
+       database: 'postgres',
+       port: 5432 ,
+       ssl: true
+  }
+}
+
+
 
 console.log(connectionParams)
 const pool = new pg.Client(connectionParams)
@@ -91,29 +89,33 @@ router.get('/insert', (req,res) => {
 	
 	
 	
-}) 
+})  
 
- 
-router.post('/insert', (req, res) => {  
+router.post('/insert',   (req, res) => {  
 	if(req.body.action && req.body.action == 'add'){
-		var addAddress = `INSERT INTO address (street, city, state, zip) VALUES ( '${req.body.street}', '${req.body.city}', '${req.body.state}', '${req.body.zip}' ) ON conflict do nothing RETURNING addressID ` 
-		
+		var addAddress = `INSERT INTO address (street, city, state, zip) VALUES ( '${req.body.street}', '${req.body.city}', '${req.body.state}', '${req.body.zip}' ) ON conflict do nothing RETURNING  addressID` 
+	
 		pool.query(addAddress, (err,result) => {
-			if(result.rows.length == 0) { return }
-			 if(result.rows.length > 0) {
-				addressID = result.rows[0].addressid 
+			if( !result ) { return }
+			    addressID = result.rows[0].addressid 
 				console.log(err,result)
 				var insertProperty = `INSERT INTO property (propertyType, price, size, num_bedroom, num_bathroom,realtorID, addressID) VALUES ('${req.body.propertytype}', '${req.body.price}','${req.body.size}','${req.body.num_bedroom}','${req.body.num_bathroom}','${current_realtorID}', '${addressID}')`
 			
 					pool.query(insertProperty, (err, result) => {
-					console.log(err, result) 
-					res.redirect('/insert')
+						console.log(err, result) 
+						res.redirect('/insert') 
+					})  
+			}) 
 		
-					}) 
-				}
-			})
-			 
-		} 
+			
+		var insertProperty = `INSERT INTO property (propertyType, price, size, num_bedroom, num_bathroom,realtorID, addressID) VALUES ('${req.body.propertytype}', '${req.body.price}','${req.body.size}','${req.body.num_bedroom}','${req.body.num_bathroom}','${current_realtorID}', '${addressID}')`
+			
+			
+		pool.query(insertProperty, (err, result) => {
+			console.log(err, result) 
+			res.redirect('/insert') 
+		})   
+	}
 		  
 	if(req.body.action && req.body.action == 'update'){ 
 	
@@ -123,7 +125,7 @@ router.post('/insert', (req, res) => {
 		if(result.rows.length == 0){
 			return
 		}else{
-			addressID = result.rows[0].addressID 
+			addressID = result.rows[0].addressid 
 			
 			var updateProperty = `UPDATE property SET propertyType = '${req.body.propertytype}', price = '${req.body.price}', size='${req.body.size}', num_bedroom = '${req.body.num_bedroom}', num_bathroom = '${req.body.num_bathroom}' WHERE addressID = '${addressID}'`
 	
@@ -400,45 +402,45 @@ router.get('/realtorpanel', (req,res) => {
  
  router.post('/realtorpanel', (req,res) => {
 	 
-		if(req.body.action && req.body.action == 'Add a listing'){
+		if(req.body.action && req.body.action == 'crud'){
 			res.redirect('/insert')
 		}
 		
-		if(req.body.action && req.body.action == 'Change password'){
+		if(req.body.action && req.body.action == 'change password'){
 			res.redirect('/realtorchangepassword')
 				
 		}   
 		
-		if(req.body.action && req.body.action == 'Change password'){
+		if(req.body.action && req.body.action == 'change password'){
 			res.redirect('/realtorchangephoneno')
 				
 		} 
 		
 		
 		
-		if(req.body.action && req.body.action == 'Change email'){
+		if(req.body.action && req.body.action == 'change email'){
 			res.redirect('/realtorchangeemail')
 				
 		} 
 		
 			
-		if(req.body.action && req.body.action == 'Change agency'){
+		if(req.body.action && req.body.action == 'change agency'){
 			res.redirect('/realtorchangeagency')
 				
 		} 
 		
-		if(req.body.action && req.body.action == 'Change phone number'){
+		if(req.body.action && req.body.action == 'change phone number'){
 			res.redirect('/realtorchangephoneno')
 		}		
 				
-		if(req.body.action && req.body.action == 'Go to listings'){
+		if(req.body.action && req.body.action == 'go to listings'){
 			res.redirect('/listingsr')
 		}  
 	 
  })
  
 router.get('/listingsr', (req,res) => {
-	pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID` , (err,property_results) => {
+	pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE realtorID = '${current_realtorID}' ` , (err,property_results) => {
             console.log(err, property_results)
           res.render('listingsr', {  
 		      properties: property_results.rows
@@ -711,7 +713,33 @@ router.post('/favorites', (req,res) => {
 		}) 
 	}else if(req.body.action && req.body.action == 'Back to Listings') {
 		 res.redirect('/listingsc')
+	}else if(req.body.action && req.body.action == 'Contact Us') {
+		res.redirect('/contactus') 
 	}
+	
+})
+
+router.get('/contactus' , (req,res) => {
+	res.render('contactus')
+})
+
+router.post('/contactus' , (req,res) => {
+	if(req.body.action && req.body.action == 'done' ){
+		res.redirect('messagesent')
+	}
+	
+})
+
+router.get('/messagesent' , (req,res) => {
+	res.render('messagesent')
+	
+})
+
+router.post('/messagesent' , (req,res) => {
+	if(req.body.action && req.body.action == 'Go back to listings' ) {
+		res.redirect('/listingsc')
+	}
+	
 })
 
 

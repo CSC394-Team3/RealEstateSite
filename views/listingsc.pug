@@ -9,7 +9,7 @@ html
 	script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" )
 	
  
-	style. 
+	style.
 		body {
 			font-family: Arial, Helvetica, sans-serif, 20px ;
 			color: black;
@@ -17,24 +17,7 @@ html
 			padding       : 0;
 			background-color: #cad297;
  
-		}
-		table {
-			
-			border: 3px solid #f1f1f1;
-			border-radius: 40px; 
-			border-color: grey;
-		}
-		tr {
-			border: 3px solid #f1f1f1;
-			border-radius: 40px;
-			border-color: grey;
-		}
-
-		td {
-			border: 3px solid #f1f1f1;
-			border-radius: 40px;
-			border-color: grey;	
-		}
+		} 
 
 		input[type=submit] {
 		  border-radius: 25px;
@@ -76,9 +59,8 @@ html
 					td Number of Bathroom 
 					td Street
 					td City 
-					td State 
+					td State  
 					td Zip
-					td Realtor Email
           
 			tbody
 				each property in properties
@@ -96,10 +78,9 @@ html
 						td #{property.city}
 						td #{property.state}
 						td #{property.zip}  
-						td #{property.email}
-            td 
-						  a(href='/listingsc?addressid='+property.propertyid) Favorite
-						
+						td
+							div.actions
+								a(class="btn btn-md btn-success btn-block", type = "submit", name = "action" , id = "contactRealtor", href ='/listingsc?addressid='+property.propertyid ) Favorite
 						td
 							div.actions
 								a(class="btn btn-md btn-success btn-block", type = "submit", name = "action" , id = "contactRealtor", href = "/autofill") Contact Realtor  

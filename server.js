@@ -39,13 +39,12 @@ if (process.env.DATABASE_URL != null){
 
    else{
    connectionParams = {
-       host: 'willowrealestate.postgres.database.azure.com',
-       user: 'team5',
-       password: 'Willow5!',
-       database: 'postgres',
-       port: 5432 ,
-       ssl: true
-  }
+		user: 'team3_user',
+      	host: 'localhost',
+  	    database: 'team3',
+		password: 'team3pass',
+		port: 5432 
+	}
 }
 
 
@@ -243,15 +242,6 @@ router.post('/realtorsignuperror' , (req,res) => {
 	} 
 	
 })
-
-router.get('/favorites' , (req,res) => {
-	res.render('favorites')
-})
-
-router.post('/favorites' , (req,res) => {
-	
-	
-}) 
 
 router.get('/invalid', (req,res) => {
 	res.render('invalidlogin')
@@ -649,50 +639,57 @@ router.post('/listingsc', (req,res) => {
 		}) 
 	}else if(req.body.action && req.body.action == 'My Favorites') {
 		 res.redirect('/favorites')
-	}
+	}else if(req.body.action && req.body.action == 'Contact Us') {
+		 res.redirect('/contactus')
+	 }
 })
 
 router.get('/favorites', (req,res) => {
+	console.log("get")
 	pool.query(`SELECT * FROM customer WHERE user_name = '${current_username}'`, (err,results) =>  {
-		customer_favorites = (results.rows[0].favorites) ? results.rows[0].favorites : ""
+		if (results.rows[0].favorites) {
+			customer_favorites = results.rows[0].favorites;	
+		} else customer_favorites = ""
 		console.log(customer_favorites)
-		if (req.query.addressid != undefined) {
 
-			var favorites;
-			var deleteaddress;
-			if ((results.rows[0].favorites).slice(0,((String) (req.query.addressid)).length - 1) == req.query.addressid) {
-				deleteaddress = req.query.addressid
-			} else {
-				deleteaddress = "," + req.query.addressid
-			}
-			console.log(results.rows[0].favorites, deleteaddress)
-			favorites = (results.rows[0].favorites).replace(deleteaddress,'')
-			console.log("deleted something from " + favorites)
-			customer_favorites = favorites
-			pool.query(`UPDATE customer SET favorites = '${favorites}' WHERE user_name = '${current_username}'`)
-			res.redirect('/favorites')
+	if (req.query.addressid != undefined) {
+		var favorites;
+		var deleteaddress;
+		if ((results.rows[0].favorites).slice(0,((String) (req.query.addressid)).length - 1) == req.query.addressid) {
+			deleteaddress = req.query.addressid
 		} else {
-			//console.log("displaying favorites")
-			var favorites;
-			if (!(results.rows) || results.rows.length == 0 || results.rows[0].favorites == null) {
-				res.redirect('/nofavorites')
-			}
-			else {
-				favorites = ("('" + results.rows[0].favorites + "')").replaceAll(",","','")
-				//console.log(favorites)
-				pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE propertyid IN ${favorites}`, (err, results) =>{
-					//console.log(results.rows)
-					res.render('favorites', {  
-						properties : results.rows
-				 	 });
-				})
-			}
+			deleteaddress = "," + req.query.addressid
 		}
-
-	})
+		console.log(results.rows[0].favorites, deleteaddress)
+		favorites = (results.rows[0].favorites).replaceAll(deleteaddress,'')
+		console.log("deleted something from " + favorites)
+		customer_favorites = favorites
+		pool.query(`UPDATE customer SET favorites = '${favorites}' WHERE user_name = '${current_username}'`)
+		res.redirect('/favorites')
+	} else {
+		//console.log("displaying favorites")
+		var favorites;
+		if (!(results.rows) || results.rows.length == 0 || results.rows[0].favorites == null) {
+			res.redirect('/nofavorites')
+		}
+		else {
+			favorites = ("('" + results.rows[0].favorites + "')").replaceAll(",","','")
+			//console.log(favorites)
+			pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE propertyid IN ${favorites}`, (err, results) =>{
+				//console.log(results.rows)
+				res.render('favorites', {  
+					properties : results.rows
+			 	 });
+			})
+		}
+	}
 })
 
+})
+
+
 router.post('/favorites', (req,res) => {
+	console.log("post")
 	favorites = ("('" + customer_favorites + "')").replaceAll(",","','")
 	if(req.body.action && req.body.action == 'Order by Housing Type') {
 		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE propertyid IN ${favorites} ORDER BY propertytype` , (err,results) =>  {
@@ -730,11 +727,8 @@ router.post('/favorites', (req,res) => {
 	}else if(req.body.action && req.body.action == 'Contact Us') {
 		res.redirect('/contactus') 
 	}else if(req.body.action && req.body.action == 'Contact Realtor' ){
-		res.redirect('/autofill')
-	
-	} 
-	
-	
+		res.redirect('/autofill') 
+	}
 })
 
 router.get('/favorites' , (req,res) => {

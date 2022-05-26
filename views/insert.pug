@@ -2,55 +2,28 @@ doctype html
 
 html
 
+	head  
+	link(rel = 'stylesheet' , href = '/css/bootstrap.min.css')
+	link(rel = 'stylesheet' , href = '/css/styles.css')
+	 
 	style.
 		body {
 			background-color: #cad297;
-		}
-		table {
-			width: 100%;
-			border: 3px solid #f1f1f1; 
-			border-color: grey;
-			
-		}
-		tr {
-			border: 3px solid #f1f1f1;
-			border-color: grey;
-		}
-
-		td {
-			border: 3px solid #f1f1f1;
-			border-color: grey;	
-		}
-		form input[type=text] {
-			width: 100%;
-			padding: 12px 20px;
-			margin: 11px 0;
-			display: inline-block;
-			border: 1px solid #ccc;
-			box-sizing: border-box;
-		}
+		} 
 		
-
-	head
-	
-	link(rel = 'stylesheet' , href = '/css/bootstrap.min.css')
-	link(rel = 'stylesheet' , href = '/css/styles.css')
-	
-	title Team #{teamNumber}
- 
-
+	title Team #{teamNumber} 
 body 
 
-  .container
-  
+	.container
+
 	h2 Create Property 
-   
+
 	form(name="add-property", action="/insert", method="post") 
 
 		div.input
 			span.label Property Type
 			input(type="text", name="propertytype")
- 
+
 
 		form(name="add-property", action="/insert", method="post") 
 			div.input

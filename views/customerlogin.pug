@@ -18,8 +18,8 @@ html
         .loginbox{
             width:320px;
             height:420px;
-            background: #000;
-            color: #fff;
+            background: #fff;
+            color: #000;
             top:50%;
             left:50%;
             position:absolute;
@@ -62,7 +62,7 @@ html
             background: transparent;
             outline: none;
             height: 40px;
-            color: #fff;
+            color: #000;
             font-size: 16px;
         }
 
@@ -81,16 +81,17 @@ html
             background: #ffc107;
             color: #000;
         }
-         
-
+     
     .loginbox
         img.avatar(src='avatar.png')
         h1 Login Here
         form(action="/customerlogin", method="post")
-            p Username
-            input(type='text' name='' placeholder='Enter Username')
+           p Username
+              input(type='text' name='username' placeholder='Enter Username')
             p Password
-            input(type='password' name='' placeholder='Enter Password')
-            input(type='submit' name='' value='Login')
+              input(type='password' name='password' placeholder='Enter Password')
+           div.actions
+              input(type = "submit", name = "action", value = "login")
+    
 
 

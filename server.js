@@ -93,16 +93,15 @@ router.post('/insert',   (req, res) => {
 			pool.query(findAddress, (err,result) => {
 				if(!result){
 					var addAddress = `INSERT INTO address (street, city, state, zip) VALUES ( '${req.body.street}', '${req.body.city}', '${req.body.state}', '${req.body.zip}' )  RETURNING  addressID` 
-				
+					console.log(`start addAddress`)
 					pool.query(addAddress, (err,result) => {
-						if( !result || !addressID) { return }
+						if( !result ) { return }
 							addressID = result.rows[0].addressid 
-							console.log(err,result)
 							
+							console.log(`addressID : ${addressID}`)
 							var insertProperty = `INSERT INTO property (propertyType, price, size, num_bedroom, num_bathroom,realtorID, addressID) VALUES ('${req.body.propertytype}', '${req.body.price}','${req.body.size}','${req.body.num_bedroom}','${req.body.num_bathroom}','${current_realtorID}', '${addressID}')`
 						
-								pool.query(insertProperty, (err, result) => {
-									console.log(err, addressID) 
+								pool.query(insertProperty, (err, result) => { 
 									res.redirect('/insert') 
 								})  
 						})
@@ -121,7 +120,7 @@ router.post('/insert',   (req, res) => {
 	var updateAddress = `UPDATE address SET street = '${req.body.street}', city = '${req.body.city}', state = '${req.body.state}', zip = '${req.body.zip}' RETURNING addressID`
 	
 	pool.query(updateAddress , (err,result) => {
-		if(!result || !addressID){
+		if( !result ){
 			return
 		}else{
 			addressID = result.rows[0].addressid 

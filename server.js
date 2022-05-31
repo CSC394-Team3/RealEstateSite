@@ -88,20 +88,32 @@ router.get('/insert', (req,res) => {
 
 router.post('/insert',   (req, res) => {  
 	if(req.body.action && req.body.action == 'add'){
-		var addAddress = `INSERT INTO address (street, city, state, zip) VALUES ( '${req.body.street}', '${req.body.city}', '${req.body.state}', '${req.body.zip}' )  RETURNING  addressID` 
-	
-		pool.query(addAddress, (err,result) => {
-			if( !result ) { return }
-			    addressID = result.rows[0].addressid 
-				console.log(err,result)
+		
+		var findAddress = `SELECT * FROM address WHERE street = '${req.body.street}' AND city = '${req.body.city}' AND state = '${req.body.state}' AND zip = '${req.body.zip}`
+			pool.query(findAddress, (err,result) => {
+				if(!result){
+					var addAddress = `INSERT INTO address (street, city, state, zip) VALUES ( '${req.body.street}', '${req.body.city}', '${req.body.state}', '${req.body.zip}' )  RETURNING  addressID` 
 				
-				var insertProperty = `INSERT INTO property (propertyType, price, size, num_bedroom, num_bathroom,realtorID, addressID) VALUES ('${req.body.propertytype}', '${req.body.price}','${req.body.size}','${req.body.num_bedroom}','${req.body.num_bathroom}','${current_realtorID}', '${addressID}')`
-			
-					pool.query(insertProperty, (err, result) => {
-						console.log(err, addressID) 
-						res.redirect('/insert') 
-					})  
-			})  
+					pool.query(addAddress, (err,result) => {
+						if( !result || !addressID) { return }
+							addressID = result.rows[0].addressid 
+							console.log(err,result)
+							
+							var insertProperty = `INSERT INTO property (propertyType, price, size, num_bedroom, num_bathroom,realtorID, addressID) VALUES ('${req.body.propertytype}', '${req.body.price}','${req.body.size}','${req.body.num_bedroom}','${req.body.num_bathroom}','${current_realtorID}', '${addressID}')`
+						
+								pool.query(insertProperty, (err, result) => {
+									console.log(err, addressID) 
+									res.redirect('/insert') 
+								})  
+						})
+					}else{
+						var updateAddress = `UPDATE address SET street = '${req.body.street}', city = '${req.body.city}', state = '${req.body.state}', zip = '${req.body.zip}' RETURNING addressID`
+						
+						pool.query(updateAddress, (err,result) => {
+							res.redirect('/insert')
+						}) 
+					}  
+			})
 	}
 		  
 	if(req.body.action && req.body.action == 'update'){ 
@@ -109,7 +121,7 @@ router.post('/insert',   (req, res) => {
 	var updateAddress = `UPDATE address SET street = '${req.body.street}', city = '${req.body.city}', state = '${req.body.state}', zip = '${req.body.zip}' RETURNING addressID`
 	
 	pool.query(updateAddress , (err,result) => {
-		if(!result){
+		if(!result || !addressID){
 			return
 		}else{
 			addressID = result.rows[0].addressid 
@@ -123,27 +135,25 @@ router.post('/insert',   (req, res) => {
 				
 			})
 		}
-	})
-
-	
-	
+	}) 
 }
 
 	if(req.body.action && req.body.action == 'delete'){ 
-		var deleteAddress = `DELETE FROM address WHERE street = '${req.body.street}', city = '${req.body.city}', state = '${req.body.state}', zip = '${req.body.zip}' RETURNING addressID`
+		var getAddress = `SELECT * FROM address WHERE street = '${req.body.street}' AND city = '${req.body.city}' AND state = '${req.body.state}' AND zip = '${req.body.zip}'`
 		
-		pool.query(deleteAddress , (err,result) => {
-		if(!result){
+		pool.query(getAddress , (err,result) => {
+		if(!result){ 
+			console.log(`addressID : 0`)
 			return
 		}else{
 			addressID = result.rows[0].addressid 
-			
-			var deletePropert = `DELETE FROM property WHERE addressID = '${addressID}'`
+			console.log(`addressID : ${addressID}`)
+			var deleteProperty = `DELETE FROM property WHERE property.addressID = '${addressID}'`
 	
-			pool.query( deleteProperty , (err,result) => {
-			console.log(err, result)
-
-			res.redirect('/insert')
+			pool.query( deleteProperty , (err,result) => { 
+				pool.query(`DELETE FROM address WHERE address.addressID = '${addressID}'`, (err,result) => {
+					res.redirect('/insert')
+				})
 				
 			})
 		}

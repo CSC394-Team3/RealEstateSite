@@ -464,7 +464,7 @@ router.get('/realtorpanel', (req,res) => {
  
  router.post('/realtorpanel', (req,res) => {
 	 
-		if(req.body.action && req.body.action == 'crud'){
+		if(req.body.action && req.body.action == 'add listings'){
 			res.redirect('/insert')
 		}
 		

@@ -251,8 +251,10 @@ router.post('/customersignup' ,   async (req,res) => {
 	  const hp = await bcrypt.hash(req.body.password, 10) 
 	  
 	  
-	 pool.query(`SELECT * FROM customer WHERE user_name = '${req.body.username}' ` , (err,result) => {
-		 if(result.rows) { return  res.redirect('/dupec') }
+	 pool.query(`SELECT * FROM customer WHERE user_name = '${req.body.username}'` , (err,result) => {
+		 if(result.rows[0]) {
+			  return  res.redirect('/dupec')
+		 }
 		 pool.query(`INSERT INTO customer(user_name,password,first_name,last_name,phone_number,email)
 			VALUES ( '${req.body.username}', '${hp}', '${req.body.firstName}', '${req.body.lastName}', '${req.body.phoneno}', '${req.body.email}' ) `, (err, result) => {
 			 current_username = req.body.username; 
@@ -302,13 +304,11 @@ router.post('/realtorsignup', async (req,res) => {
 	
 	const hp = await bcrypt.hash(req.body.password, 10)
 	
-	pool.query(`SELECT * FROM realtor WHERE user_name = '${req.body.username}'` , (req,result) => {
-		if(result.rows) { 
+	pool.query(`SELECT * FROM realtor WHERE user_name = '${req.body.username}'` , (err,result) => {
+		if(result.rows[0]) { 
 			return res.redirect('/duper')
 		 }
-		pool.query(`INSERT INTO realtor(realtorID, user_name,password, agency, first_name,last_name,phone_number,email)
-		VALUES ( '${req.body.realtorID}' ,'${req.body.username}', '${hp}', '${req.body.agency}','${req.body.firstName}', '${req.body.lastName}', '${req.body.phoneno}', '${req.body.email}' ) 
-		 `, (err, result) => {
+		pool.query(`INSERT INTO realtor(realtorID, user_name,password, agency, first_name,last_name,phone_number,email) VALUES ( '${req.body.realtorID}' ,'${req.body.username}', '${hp}', '${req.body.agency}','${req.body.firstName}', '${req.body.lastName}', '${req.body.phoneno}', '${req.body.email}' )`, (err, result) => {
 			 current_realtorID = req.body.realtorID;
 			 current_username = req.body.username;
 			res.redirect('/realtorlogin')

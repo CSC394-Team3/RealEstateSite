@@ -43,12 +43,7 @@ html
         button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarsExample03', aria-controls='navbarsExample03', aria-expanded='false', aria-label='Toggle navigation')
             span.navbar-toggler-icon
         #navbarsExample10.collapse.navbar-collapse.justify-content-md-center
-            ul.navbar-nav.mr-auto
-                li.nav-item.active
-                    a.nav-link(href='#')
-                        | Home 
-                li.nav-item
-                    a.nav-link(href='/about') About
+            ul.navbar-nav.mr-auto 
                 li.nav-item.dropdown
                     a#dropdown03.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Login
                     .dropdown-menu(aria-labelledby='dropdown03')
@@ -59,7 +54,8 @@ html
                     .dropdown-menu(aria-labelledby='dropdown03')
                         a.dropdown-item(href='/realtorsignup') New Realtor
                         a.dropdown-item(href='/customersignup') New Customer
-  
+                li.nav-item
+                    a.nav-link(href='/about') About  
     //image banner
     .image_banner
         a.text_banner Find your dream home today

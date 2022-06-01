@@ -309,9 +309,10 @@ router.post('/realtorsignup', async (req,res) => {
 			return res.redirect('/duper')
 		 }
 		pool.query(`INSERT INTO realtor(realtorID, user_name,password, agency, first_name,last_name,phone_number,email) VALUES ( '${req.body.realtorID}' ,'${req.body.username}', '${hp}', '${req.body.agency}','${req.body.firstName}', '${req.body.lastName}', '${req.body.phoneno}', '${req.body.email}' )`, (err, result) => {
+			 console.log(req.body.realtorID)
 			 current_realtorID = req.body.realtorID;
 			 current_username = req.body.username;
-			res.redirect('/realtorlogin')
+			 res.redirect('/realtorlogin')
 			
 			} ); 
 	

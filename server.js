@@ -604,6 +604,8 @@ router.post('/listingsr', (req,res) => {
 		})
 	}else if(req.body.action && req.body.action == 'Contact Us'){
 		res.redirect('/contactus')
+	}else if(req.body.action && req.body.action == 'Back to My Panel'){
+		res.redirect('/realtorpanel')
 	}
 })  
 
@@ -788,7 +790,9 @@ router.post('/listingsc', (req,res) => {
 		 res.redirect('/favorites')
 	}else if(req.body.action && req.body.action == 'Contact Us') {
 		 res.redirect('/contactus')
-	 }
+	 }else if(req.body.action && req.body.action == 'Back to My Panel'){
+		res.redirect('/realtorpanel')
+	}
 })
 
 router.get('/favorites', (req,res) => {

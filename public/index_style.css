@@ -39,6 +39,7 @@
    background-color: #304d0b;
    color: white;
    text-align: center;
+   padding: 10px;
 }
 
 
@@ -52,34 +53,6 @@
   font-size: 18px;
   line-height: 25px;
   border-radius: 4px;
-}
-
-/* Change the background color on mouse-over */
-.header a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-/* Style the active/current link*/
-.header a.active {
-  background-color: #a7d06b;
-  color: white;
-}
-
-/* Float the link section to the right */
-.header-right {
-  float: right;
-}
-
-.header_line {
-    position: static;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 5px;
-    background-color: #1c4105;
-    color: white;
-    text-align: center;
 }
 
 

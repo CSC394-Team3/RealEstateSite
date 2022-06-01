@@ -1,0 +1,81 @@
+
+		{
+		 margin:0;
+		 padding:0;
+		 font-family:sans-serif;
+		 box-sizing: border-box;
+		 font-weight: bold;
+		}
+		body{
+			 display: flex;
+			 height:100vh;
+			 justify-content: center;
+			 align-items: center;
+			 padding: 10px;
+			 background: linear-gradient(135deg,#cad297, #2a520f);
+
+		}
+		.avatar{
+			 width: 100px;
+			 height:100px;
+			 border-radius: 50%;
+			 position: absolute;
+			 top: 15px;
+			 left: calc(50% - 50px);
+		}
+
+		.loginbox{
+			 max-width: 700px;
+			 width: 100%;
+			 background: #fff;
+			 padding: 25px 30px;
+			 border-radius: 5px;
+		}
+
+		.loginbox .title {
+			 font-size: 25px;
+			 font-weight: 500;
+			 position: relative;
+		}
+
+		.loginbox form .user-details
+		{
+			 display: flex;
+			 flex-wrap: wrap;
+			 justify-content: space-between;
+		}
+
+		form .user-details .input-box{
+			 margin: 20px 0 12px 0;
+			 width: calc(100% / 2 - 20px);
+		}
+		.user-details .input-box input{
+			 height: 45px;
+			 width: 100%;
+			 outline: none;
+			 border: 1px solid #ccc;
+			 padding-left: 15px;
+		}
+		.user-details .input-box details{
+			 display: block;
+			 font-weight: 500px;
+			 margin-bottom: 5px;
+		}
+
+		.loginbox input[type="submit"]{
+			 border: none;
+			 outline: none;
+			 width: 100%;
+			 height: 40px;
+			 background: #fb2525;
+			 color: #fff;
+			 font-size: 18px;
+			 border-radius:20px ;
+		}
+
+		.loginbox input[type="submit"]:hover{
+			 cursor: pointer;
+			 background: #ffc107;
+			 color: #000;
+		}
+		

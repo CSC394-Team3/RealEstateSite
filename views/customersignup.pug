@@ -1,33 +1,34 @@
 doctype html
 
 html 
-	body
-		h1 Please Enter Your Information:
-		
-		form(action = "/customersignup", method = "post")  
-			div.input
-				span.label Username
-				input(type = "text" , name = "username")
-				
-			div.input
-				span.label Password
-				input(type = "password" , name = "password")
-				
-			div.input
-				span.label First Name
-				input(type = "text" , name = "firstName")
-				
-			div.input
-				span.label Last Name
-				input(type = "text" , name = "lastName")
-				
-			div.input  
-				span.label Phone Number
-				input(type = "text" , name = "phoneno")
-				
-			div.input
-				span.label Email
-				input(type = "text" , name = "email")
-				
-			div.actions
-				input(type = "submit", value = "done")
+		head
+		title Customer Sign Up
+	
+		link(rel = 'stylesheet' , href = '/css/bootstrap.min.css')
+		link(rel = 'stylesheet' , href = '/css/styles.css')
+		link(rel = 'stylesheet',  href='signup.css')
+	
+		.loginbox
+			img.avatar(src='avatar.png') 
+			form(action="/customersignup", method = "post")
+				.user-details
+				.input-box
+					span.details First Name
+					input(type='text', name = 'firstName', placeholder='Enter first name' required='')
+				.input-box
+					span.details Last Name
+					input(type='text', name = 'lastName' ,placeholder='Enter last name' required='') 
+				.input-box
+					span.details Email
+					input(type='text', name = 'email', placeholder='Enter email' required='')
+				.input-box
+					span.details Phone Number
+					input(type='text', name = 'phoneno', placeholder='Enter Phone Number' required='')
+				.input-box
+					span.details Username
+					input(type='text', name = 'username', placeholder='Enter username' required='')
+				.input-box
+					span.details Password
+					input(type='password', name = 'password', placeholder='Enter password' required='')
+				.button
+					input(type='submit' , name = 'action', value='login') 

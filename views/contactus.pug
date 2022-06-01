@@ -1,0 +1,24 @@
+doctype html
+
+html
+	head
+	title Contact Us
+
+	style.
+		body {
+			font-family: Arial, Helvetica, sans-serif;
+			color: black;
+			margin        : 0;
+			padding       : 0;
+			background-color: #cad297;
+		}
+	
+	
+	body 
+		
+		form(action="/contactus",method="post")
+			div.input 
+				span.label Please type your message here: 
+			textarea(name="message", id="message", rows = 20, cols = 80)  
+			div.actions  
+				input(type = "submit", name = "action", value = "done")

@@ -1,0 +1,58 @@
+doctype html
+
+html
+
+	head  
+	link(rel = 'stylesheet' , href = '/css/bootstrap.min.css')
+	link(rel = 'stylesheet' , href = '/css/styles.css')
+	 
+	style.
+		body {
+			background-color: #cad297;
+			font-size: 15px;
+		} 
+		 
+	
+body 
+	
+	.container
+		h2 Edit Property  
+		form(name="edit-property", action="/update", method="post") 
+			div.input
+				span.label Property Type
+				input(type="text", name="propertytype", value = property.propertytype)
+
+			div.input
+				span.label Price
+				input(type="text", name="price", value = property.price)
+
+			div.input
+				span.label Size
+				input(type="text", name="size", value = property.size)
+
+			div.input
+				span.label Number of Bedroom
+				input(type="text", name="num_bedroom", value = property.num_bedroom)
+
+			div.input
+				span.label Number of Bathroom
+				input(type="text", name="num_bathroom", value = property.num_bathroom)
+	 
+			div.input
+				span.label Street Address
+				input(type="text", name="street",  value = property.street  )
+				
+			div.input
+				span.label City
+				input(type="text", name="city",  value = property.city)
+				
+			div.input
+				span.label State
+				input(type="text", name="state",  value = property.state)
+				
+			div.input
+				span.label Zip
+				input(type="text", name="zip",  value = property.zip)
+
+			div.actions
+				input(type="submit",name="action", value="Done")   

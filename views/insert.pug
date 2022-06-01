@@ -1,57 +1,98 @@
 doctype html
 
 html
-	head
-	title Team #{teamNumber}
+
+	head  
+	link(rel = 'stylesheet' , href = '/css/bootstrap.min.css')
+	link(rel = 'stylesheet' , href = '/css/styles.css')
+	 
+	style.
+		body {
+			background-color: #cad297;
+			font-size: 15px;
+		} 
+		 
+	
 body 
+	
+	.container
+		h2 Create Property  
+		form(name="add-property", action="/insert", method="post") 
+			div.input
+				span.label Property Type
+				input(type="text", name="propertytype")
 
-	h2 Create Property 
-   
-	form(name="add-property", action="/insert", method="post") 
-		div.input
-			span.label Property Type
-			input(type="text", name="propertytype")
+			div.input
+				span.label Price
+				input(type="text", name="price")
 
-		div.input
-			span.label Price
-			input(type="text", name="price")
+			div.input
+				span.label Size
+				input(type="text", name="size")
 
-		div.input
-			span.label Size
-			input(type="text", name="size")
+			div.input
+				span.label Number of Bedroom
+				input(type="text", name="num_bedroom")
 
-		div.input
-			span.label Number of Bedroom
-			input(type="text", name="num_bedroom")
+			div.input
+				span.label Number of Bathroom
+				input(type="text", name="num_bathroom")
+	 
+			div.input
+				span.label Street Address
+				input(type="text", name="street")
+				
+			div.input
+				span.label City
+				input(type="text", name="city")
+				
+			div.input
+				span.label State
+				input(type="text", name="state")
+				
+			div.input
+				span.label Zip
+				input(type="text", name="zip")
 
-		div.input
-			span.label Number of Bathroom
-			input(type="text", name="num_bathroom")
- 
-		div.input
-			span.label Address ID
-			input(type="text", name="addressID")
-
-		div.actions
-			input(type="submit",name="action", value="add")
-			input(type="submit",name="action", value="delete")
-			input(type="submit",name="action", value="update")  
- 
-	br
-
-	table
-		thead
-			tr
-				td Type
-				td Price
-				td Size (sq ft)
-				td Number of Bedroom
-				td Number of Bathroom 
-		tbody
-			each property in properties
-				tr 
-					td #{property.propertytype}
-					td #{property.price}
-					td #{property.size}
-					td #{property.num_bedroom}
-					td #{property.num_bathroom}  
+			div.actions
+				input(type="submit",name="action", value="add") 
+	 
+	 
+			table#crud.table.table-hover.table-striped.table-bordered
+				thead
+					tr
+						td
+						td Type
+						td Price
+						td Size (sq ft)
+						td Number of Bedroom
+						td Number of Bathroom 
+						td Street
+						td City
+						td State
+						td Zip
+				tbody
+					each property in properties
+						tr 
+							td 
+								input#checkbox1(type='checkbox' name='options[]' value='1')
+							td #{property.propertytype}
+							td #{property.price}
+							td #{property.size}
+							td #{property.num_bedroom}
+							td #{property.num_bathroom}  
+							td #{property.street}
+							td #{property.city}
+							td #{property.state}
+							td #{property.zip}
+							td
+								a(class="btn btn-md btn-success btn-block", type = "submit", name = "action" , value = "Edit", href ='/update?action=edit&addressid='+property.addressid ) Edit
+								a(class="btn btn-md btn-success btn-block", type = "submit", name = "action" , value = "Delete", href ='/insert?action=delete&addressid='+property.addressid ) Delete
+								
+							script(src='https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css')
+							script(src='https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js')
+								
+								script.
+									$(document).ready(function() {
+										$('#crud').DataTable();
+									});

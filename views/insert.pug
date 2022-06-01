@@ -88,7 +88,8 @@ body
 							td #{property.state}
 							td #{property.zip}
 							td
-								input(class="btn btn-md btn-success btn-block", type="submit",name="action", value="x")
+								a(class="btn btn-md btn-success btn-block", type = "submit", name = "action" , value = "Edit", href ='/insert?action=edit&addressid='+property.addressid ) Edit
+								a(class="btn btn-md btn-success btn-block", type = "submit", name = "action" , value = "Delete", href ='/insert?action=delete&addressid='+property.addressid ) Delete
 								
 							script(src='https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css')
 							script(src='https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js')

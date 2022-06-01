@@ -59,11 +59,9 @@ html
 						td #{property.city}
 						td #{property.state}
 						td #{property.zip} 
-						
 						td
-							input(class="btn btn-md btn-success btn-block", type="submit",name="action", value="update")
-						td
-							input(class="btn btn-md btn-success btn-block", type="submit",name="action", value="delete")
+							a(class="btn btn-md btn-success btn-block", type = "submit", name = "action" , value = "Edit", href ='/listingsr?action=edit&addressid='+property.addressid ) Edit
+							a(class="btn btn-md btn-success btn-block", type = "submit", name = "action" , value = "Delete", href ='/listingsr?action=delete&addressid='+property.addressid ) Delete
 						
 						
 						script(src='https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css')
@@ -73,7 +71,7 @@ html
 							$(document).ready(function() {
 								$('#listings').DataTable();
 							});
-							
+							 
 							
 							
 							

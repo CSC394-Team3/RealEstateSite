@@ -6,7 +6,24 @@ const router = express.Router();
 const path = require('path') 
 const pg = require('pg')
 const bcrypt = require('bcrypt') 
-const { body, validationResult } = require('express-validator');  
+const { body, validationResult } = require('express-validator');
+const methodOverride = require('method-override');
+app.use(methodOverride('_method'));
+
+  
+  
+  
+const http = require('http');
+const url = require('url');
+
+http
+  .createServer(function (req, res) {
+    const queryObject = url.parse(req.url, true).query;
+    console.log(queryObject);
+
+    res.writeHead(200, { 'Content-Type': 'text/html' }); 
+  })
+  .listen(8080);
 
 //Set location for accessing files
 app.use(express.static(path.join(__dirname, 'public')));
@@ -18,6 +35,8 @@ var current_realtorID = 2;
 var addressID 
 var realtor = true;
 var customer_favorites = "";
+var deleteRecord = false;
+var editRecord = false;
 
 //for parsing application/json
 app.use(bodyParser.json());
@@ -74,16 +93,30 @@ router.post('/',
 
 })
 
-router.get('/insert', (req,res) => {  
-	 
-	pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID` , (err,property_results) => {
-            console.log(err, property_results)
+router.get('/insert', (req,res) => {    
+	
+	if(req.query.action && req.query.action == 'delete'){
+		console.log('aaaa') 
+		 addressID = req.query.addressid
+		var deleteProperty = `DELETE FROM property WHERE property.addressID = '${addressID}'`
+			
+			pool.query( deleteProperty , (err,result) => { 
+				pool.query(`DELETE FROM address WHERE address.addressID = '${addressID}'`, (err,result) => { 
+						pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE property.realtorID = ${current_realtorID}` , (err,property_results) => {
+								 
+						}); 
+				});  
+		})
+	}
+		
+		pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE property.realtorID = ${current_realtorID}` , (err,property_results) => {
+            //console.log(err, property_results)
           res.render('insert', {  
 		      properties: property_results.rows
-			}); 
-			
-	
+		    }); 
+		      
 	}); 
+	 
 })  
 
 router.post('/insert',   (req, res) => {  
@@ -131,7 +164,8 @@ router.post('/insert',   (req, res) => {
 		}
 		console.log('Update:  Address found')
 		
-		addressID = result.rows[0].addressid  
+		addressID = result.rows[0].addressid
+		if(  !req.query.action ) {	addressID = req.query.addressID  }
 		pool.query(updateAddress , (err,result) => {  
 				var updateProperty = `UPDATE property SET propertyType = '${req.body.propertytype}', price = '${req.body.price}', size='${req.body.size}', num_bedroom = '${req.body.num_bedroom}', num_bathroom = '${req.body.num_bathroom}' WHERE addressID = '${addressID}'`
 		
@@ -145,28 +179,28 @@ router.post('/insert',   (req, res) => {
 	})
 }
 
-	if(req.body.action && req.body.action == 'delete'){ 
+	if( req.body.action && req.body.action == 'delete' ){ 
 		var getAddress = `SELECT * FROM address WHERE street = '${req.body.street}' AND city = '${req.body.city}' AND state = '${req.body.state}' AND zip = '${req.body.zip}'`
 		
-		pool.query(getAddress , (err,result) => {
-		if(!result.rows[0]){ 
-			res.redirect('/addressnotfound')
-			return;
-		}else{
-			addressID = result.rows[0].addressid 
-			console.log(`addressID : ${addressID}`)
-			var deleteProperty = `DELETE FROM property WHERE property.addressID = '${addressID}'`
-	
-			pool.query( deleteProperty , (err,result) => { 
-				pool.query(`DELETE FROM address WHERE address.addressID = '${addressID}'`, (err,result) => {
-					res.redirect('/insert')
-				})
+	 	pool.query(getAddress , (err,result) => {
+			if( !result.rows[0]){  
+				res.redirect('/addressnotfound')
+				return;
+			}else{
+				addressID = result.rows[0].addressid  
+				console.log(`addressID : ${addressID}`)
+				var deleteProperty = `DELETE FROM property WHERE property.addressID = '${addressID}'`
 				
-			})
-		}
-	}) 
-	}
-}) 
+				pool.query( deleteProperty , (err,result) => { 
+					pool.query(`DELETE FROM address WHERE address.addressID = '${addressID}'`, (err,result) => {
+						res.redirect('/insert')
+					})
+
+				})
+			}
+		})  
+	}  
+})  
 
 router.get('/addressnotfound' , (req,res) => {
 	res.render('addressnotfound')
@@ -468,7 +502,22 @@ router.get('/realtorpanel', (req,res) => {
  })
  
  
-router.get('/listingsr', (req,res) => {
+router.get('/listingsr', (req,res) => { 
+	if(req.query.action && req.query.action == 'delete'){
+		console.log('aaaa') 
+		 addressID = req.query.addressid
+		var deleteProperty = `DELETE FROM property WHERE property.addressID = '${addressID}'`
+			
+			pool.query( deleteProperty , (err,result) => { 
+				pool.query(`DELETE FROM address WHERE address.addressID = '${addressID}'`, (err,result) => { 
+						pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE property.realtorID = ${current_realtorID}` , (err,property_results) => {
+								 
+						}); 
+				});  
+		})
+	}
+		
+		
 	pool.query(`SELECT * FROM property INNER JOIN address on address.addressID = property.addressID WHERE realtorid = '${current_realtorID}' ` , (err,property_results) => {
  
             console.log(err, property_results)
@@ -478,6 +527,7 @@ router.get('/listingsr', (req,res) => {
 			
 	
 	});
+	 
  })
 
 router.post('/listingsr', (req,res) => {

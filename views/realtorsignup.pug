@@ -1,107 +1,40 @@
 doctype html
 
-html  
-	head
+html 
+		head
+		title Realtor Sign Up
 	
-	link(rel = 'stylesheet' , href = '/css/bootstrap.min.css')
-	link(rel = 'stylesheet' , href = '/css/styles.css')
+		link(rel = 'stylesheet' , href = '/css/bootstrap.min.css')
+		link(rel = 'stylesheet' , href = '/css/styles.css')
+		link(rel = 'stylesheet',  href='signup.css')
 	
-	style. 
-		form {
-			border: 3px solid #f1f1f1;
-		}
-		h1 {text-align: center;}
-		body {
-			font-family: Arial, Helvetica, sans-serif;
-			color: black;
-			margin        : 0;
-			padding       : 0;
-			display       : grid;
-			place-content : center;
-			min-height    : 100vh;
-			background-color: #cad297;
-		}
-		
-		input[type=text], input[type=password] {
-			width: 100%;
-			padding: 12px 20px;
-			margin: 11px 0;
-			display: inline-block;
-			border: 1px solid #ccc;
-			box-sizing: border-box;
-		}
-		button {
-			background-color: black;
-			color: white;
-			padding: 14px 20px;
-			margin: 8px 0;
-			border: none;
-			cursor: pointer;
-			width: 100%;
-		
-			display: table-cell;
-			text-align: center;
-			vertical-align: middle;
-		}
-		
-		input[type="submit"] {
-			display: block;
-			margin: 0 auto;
-			padding: 7px 14px;
-		}
-		
-	body
-		script. 
-			function changeSubmit(e) {
-				if (e.target.checked) {
-					document.getElementById("submitButton").disabled = false
-				} else {
-					document.getElementById("submitButton").disabled = true
-				}
-			}
-		
-	
-
-		span.h0s(style={color: 'black', 'font-size': '30px', 'tab-size': 12 }) <strong> Create your Willow Account:<strong>
-		
-		form(action = "/realtorsignup", method = "post") 
-			
-			
-			div.input
-				span.h1(style={color: 'black', 'font-size': '16px', 'tab-size': 12 }) <strong>Realtor ID<strong>
-				input(type = "text", name = "realtorID" )
-
-				
-			div.input
-				span.h2(style={color: 'black', 'font-size': '16px', 'tab-size': 12 }) <strong>Username<strong>
-				input(type = "text" , name = "username")
-				
-			div.input
-				span.h3(style={color: 'black', 'font-size': '16px', 'tab-size': 12 }) <strong>Password<strong>
-				input(type = "password", name = "password") 
-				
-			div.input
-				span.h4(style={color: 'black', 'font-size': '16px', 'tab-size': 12 }) <strong>Agency<strong>
-				input(type = "text", name = "agency")
-			div.input
-				sspan.h5(style={color: 'black', 'font-size': '16px', 'tab-size': 12 }) <strong>First Name<strong>
-				input(type = "text" , name = "firstName")
-				
-			div.input
-				span.h6(style={color: 'black', 'font-size': '16px', 'tab-size': 12 }) <strong>Last Name<strong>
-				input(type = "text" , name = "lastName")
-				
-			div.input  
-				span.h7(style={color: 'black', 'font-size': '16px', 'tab-size': 12 }) <strong>Phone Number<strong>
-				input(type = "text" , name = "phoneno")
-				
-			div.input
-				span.h8(style={color: 'black', 'font-size': '16px', 'tab-size': 12 }) <strong>Email<strong>
-				input(type = "text" , name = "email")
-
-			div.input
-				span.h9(style={color: 'black', 'font-size': '16px', 'tab-size': 12 }) <strong>Accept Terms and Conditions<strong>
-				input(type = "checkbox", name = "RealtorTerms", onclick="changeSubmit()")
-				
-			div.actions
-				input(class="btn btn-lg btn-secondary btn-block", type = "submit", disabled= "true", id="submitButton", value = "done")
+		.loginbox
+			img.avatar(src='avatar.png') 
+			form(action="/realtorsignup", method = "post")
+				.user-details
+				.input-box
+					span.details Realtor ID
+					input(type='text', name = 'realtorID', placeholder='Enter realtor ID' required='')
+				.input-box
+					span.details Agency
+					input(type='text', name = 'agency' ,placeholder='Agency' required='') 
+				.input-box
+					span.details First Name
+					input(type='text', name = 'firstName', placeholder='Enter first name' required='')
+				.input-box
+					span.details Last Name
+					input(type='text', name = 'lastName' ,placeholder='Enter last name' required='') 
+				.input-box
+					span.details Email
+					input(type='text', name = 'email', placeholder='Enter email' required='')
+				.input-box
+					span.details Phone Number
+					input(type='text', name = 'phoneno', placeholder='Enter Phone Number' required='')
+				.input-box
+					span.details Username
+					input(type='text', name = 'username', placeholder='Enter username' required='')
+				.input-box
+					span.details Password
+					input(type='password', name = 'password', placeholder='Enter password' required='')
+				.button
+					input(type='submit' , name = 'action', value='login') 

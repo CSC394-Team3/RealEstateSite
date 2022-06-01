@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hdjokic/Team3.git"
+    "url": "git+https://github.com/CSC394-Team3/RealEstateSite.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/hdjokic/Team3/issues"
+    "url": "https://github.com/CSC394-Team3/RealEstateSite/issues"
   },
-  "homepage": "https://github.com/hdjokic/Team3#readme",
+  "homepage": "https://github.com/CSC394-Team3/RealEstateSite#readme",
   "dependencies": {
     "-": "^0.0.1",
     "bcrypt": "^5.0.1",

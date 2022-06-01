@@ -83,16 +83,16 @@ router.get('/', (req, res) => {
  
 router.post('/',
 		(req,res) => {
-		
-		const errors = validationResult(req);
-		if(!errors.isEmpty()) {
-			return res.status(400).send({ errors: errors.array() });
-		}
+		 
 		
 		res.redirect('/')
 
 })
 
+router.get('/about', (req,res) => {
+	res.render('about')
+
+})
 router.get('/insert', (req,res) => {     
 	
 	if(req.query.action && req.query.action == 'delete'){

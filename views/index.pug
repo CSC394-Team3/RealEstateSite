@@ -2,44 +2,92 @@ doctype html
    
 html
 
-	head
-	title Willow
-      
-	// stylesheet
-	link(rel = 'stylesheet' , href = '/css/bootstrap.min.css')
-	link(rel = 'stylesheet' , href = '/css/styles.css')
-	link(rel = 'stylesheet', href='index_style.css') 
+    head
+    title Willow
 
-	style.
-		input[type=submit] {
-			border-radius: 25px; 
-		}
- 
-	// Header
-	.header
-		img(src='Logo_banner.png', style='display: block;  width: 20%;')
-		//.header-right
-			//a.active(href='#home') Home
-			//a(href='#contact') Contact
-			//a(href='#about') About
-			//a(href='#login') Login
-			//a(href='#faq') FAQ
- 
-	// image banner
-	.image_banner
-		a.text_banner Find your dream home today
+    // stylesheet
+    link(rel = 'stylesheet' , href = '/css/bootstrap.min.css')
+    link(rel = 'stylesheet' , href = '/css/styles.css')
+    link(rel = 'stylesheet', href='index_style.css') 
 
-	body
-		p(style='text-align:center;') Please choose a login option:
-		form(action='/login', method='post', style='margin: auto; width: 150px;')
-			div.actions
-				input(class="btn btn-sm btn-secondary btn-block", type='submit', name='action', value='customer')
-				input(class="btn btn-sm btn-secondary btn-block", type='submit', name='action', value='realtor')
-   
-		p(style='text-align:center;') Or sign up here: 
-		form(action='/register', method='post', style='margin: auto; width: 150px;')
-			div.actions
-				input(class="btn btn-sm btn-secondary btn-block", type='submit', name='action', value='customer')
-				input(class="btn btn-sm btn-secondary btn-block", type='submit', name='action', value='realtor')
- 
-	
+    style.
+        input[type=submit] {
+        border-radius: 25px; 
+        }
+        
+        /* Modify the background color */
+         
+        .navbar-custom {
+            background-color: #6f8e74;
+        }
+        /* Modify brand and text color */
+         
+        .navbar-custom .nav-link {
+            color: white;
+            font-size: 18px;
+        }
+        
+        .dropdown-menu {
+            background-color: #6f8e74;
+        }
+        
+        .dropdown-menu a.dropdown-item {
+            color: white;
+        }
+    
+    //Header
+    img(src='Logo_banner.png', style='display: block; margin-right: auto;  width: 20%;')
+    nav.navbar-custom.navbar-expand-sm.navbar
+        a.navbar-brand(href='#')
+            //img(src='Logo_banner.png', style='display: block; margin-right: auto;  width: 20%;')
+        button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarsExample03', aria-controls='navbarsExample03', aria-expanded='false', aria-label='Toggle navigation')
+            span.navbar-toggler-icon
+        #navbarsExample10.collapse.navbar-collapse.justify-content-md-center
+            ul.navbar-nav.mr-auto
+                li.nav-item.active
+                    a.nav-link(href='#')
+                        | Home 
+                li.nav-item
+                    a.nav-link(href='/about') About
+                li.nav-item.dropdown
+                    a#dropdown03.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Login
+                    .dropdown-menu(aria-labelledby='dropdown03')
+                        a.dropdown-item(href='/realtorlogin') Realtor
+                        a.dropdown-item(href='/customerlogin') Customer
+                li.nav-item.dropdown
+                    a#dropdown03.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Sign Up
+                    .dropdown-menu(aria-labelledby='dropdown03')
+                        a.dropdown-item(href='/realtorsignup') New Realtor
+                        a.dropdown-item(href='/customersignup') New Customer
+  
+    //image banner
+    .image_banner
+        a.text_banner Find your dream home today
+
+    script(
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"
+        integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+        crossorigin="anonymous"
+    )
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js" integrity="sha256-pS96pU17yq+gVu4KBQJi38VpSuKN7otMrDQprzf/DWY=" crossorigin="anonymous")
+    script(
+        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/js/bootstrap.min.js"
+        integrity="sha256-DiWJXXyq81WlPRnDfGmgYZj2aOVCKyEdJ1l+2TmDuAs="
+        crossorigin="anonymous"
+    )
+    
+    .footer @2022 Team 5
+
+    
+//    body
+//        p(style='text-align:center;') Please choose a login option:
+//        form(action='/login', method='post', style='margin: auto; width: 150px;')
+//            div.actions
+//                input(class="btn btn-sm btn-secondary btn-block", type='submit', name='action', value='customer')
+//                input(class="btn btn-sm btn-secondary btn-block", type='submit', name='action', value='realtor')
+//
+//        p(style='text-align:center;') Or sign up here: 
+//        form(action='/register', method='post', style='margin: auto; width: 150px;')
+//            div.actions
+//                input(class="btn btn-sm btn-secondary btn-block", type='submit', name='action', value='customer')
+//                input(class="btn btn-sm btn-secondary btn-block", type='submit', name='action', value='realtor')

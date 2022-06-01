@@ -493,7 +493,8 @@ router.get('/realtorpanel', (req,res) => {
 		
 		if(req.body.action && req.body.action == 'change phone number'){
 			res.redirect('/realtorchangephoneno')
-		}		
+		}	
+		
 				
 		if(req.body.action && req.body.action == 'go to listings'){
 			res.redirect('/listingsr')

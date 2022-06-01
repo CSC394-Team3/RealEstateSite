@@ -10,7 +10,7 @@ html
 	
 		.loginbox
 			img.avatar(src='avatar.png') 
-			form(action="/customersignup", method = "post")
+			form(name = "signupc", action="/customersignup", onsubmit="return checkPhoneNo()", method = "post")
 				.user-details
 				.input-box
 					span.details First Name
@@ -32,3 +32,14 @@ html
 					input(type='password', name = 'password', placeholder='Enter password' required='')
 				.button
 					input(type='submit' , name = 'action', value='login') 
+					
+				script.
+					function checkPhoneNo()
+						{
+							var x=document.forms["signupc"]["phoneno"].value;
+							if (isNaN(x))  
+							{
+								alert("Must input numbers for phone number");
+								return false;
+							}
+						}

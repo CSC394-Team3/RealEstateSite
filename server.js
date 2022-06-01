@@ -34,9 +34,7 @@ var current_username = "";
 var current_realtorID = 2;
 var addressID 
 var realtor = true;
-var customer_favorites = "";
-var deleteRecord = false;
-var editRecord = false;
+var customer_favorites = ""; 
 
 //for parsing application/json
 app.use(bodyParser.json());
@@ -87,6 +85,10 @@ router.post('/',
 		
 		res.redirect('/')
 
+})
+
+router.get('/logout' , (req,res) => { 
+	res.redirect('/')
 })
 
 router.get('/about', (req,res) => {
@@ -241,20 +243,36 @@ router.post('/customersignup' ,   async (req,res) => {
 	if( !req.body.username || !req.body.password || !req.body.firstName || !req.body.lastName || !req.body.phoneno || !req.body.email){
 		
 		res.redirect('/customersignuperror')
+	}else if(isNaN(req.body.phoneno)){
+		
+		
 	}else{
 	 
-	  const hp = await bcrypt.hash(req.body.password, 10)   
-	 
-	 pool.query(`INSERT INTO customer(user_name,password,first_name,last_name,phone_number,email)
-		VALUES ( '${req.body.username}', '${hp}', '${req.body.firstName}', '${req.body.lastName}', '${req.body.phoneno}', '${req.body.email}' ) `, (err, result) => {
-		 current_username = req.body.username; 
-		 
-		 res.redirect('/customerlogin')
-		 
-		 } );  
-		
+	  const hp = await bcrypt.hash(req.body.password, 10) 
+	  
+	  
+	 pool.query(`SELECT * FROM customer WHERE user_name = '${req.body.username}' ` , (err,result) => {
+		 if(result.rows) { return  res.redirect('/dupec') }
+		 pool.query(`INSERT INTO customer(user_name,password,first_name,last_name,phone_number,email)
+			VALUES ( '${req.body.username}', '${hp}', '${req.body.firstName}', '${req.body.lastName}', '${req.body.phoneno}', '${req.body.email}' ) `, (err, result) => {
+			 current_username = req.body.username; 
+			 
+			 res.redirect('/customerlogin')
+			 
+			 } );  
+		})
 	}
 	
+})
+
+router.get('/dupec' , (req,res) => {
+	res.render('dupec')
+})
+
+router.post('/dupec' , (req,res) => {
+	if( req.body.action && req.body.action == 'try again' ){ 
+		  res.redirect('/customersignup')
+	}  
 })
 
 router.get('/customersignuperror' , (req,res) => {
@@ -278,20 +296,39 @@ router.post('/realtorsignup', async (req,res) => {
 	if( !req.body.realtorID || !req.body.username || !req.body.password || !req.body.agency || !req.body.firstName ||
 	 !req.body.lastName || !req.body.phoneno || !req.body.email)  
 	 
-	 return res.redirect('/realtorsignuperror')
+	 return res.redirect('/realtorsignuperror') 
+	 
+	 if( isNaN(req.body.phoneno) ) { return }
 	
 	const hp = await bcrypt.hash(req.body.password, 10)
 	
-	pool.query(`INSERT INTO realtor(realtorID, user_name,password, agency, first_name,last_name,phone_number,email)
+	pool.query(`SELECT * FROM realtor WHERE user_name = '${req.body.username}'` , (req,result) => {
+		if(result.rows) { 
+			return res.redirect('/duper')
+		 }
+		pool.query(`INSERT INTO realtor(realtorID, user_name,password, agency, first_name,last_name,phone_number,email)
 		VALUES ( '${req.body.realtorID}' ,'${req.body.username}', '${hp}', '${req.body.agency}','${req.body.firstName}', '${req.body.lastName}', '${req.body.phoneno}', '${req.body.email}' ) 
-	 `, (err, result) => {
-		 current_realtorID = req.body.realtorID;
-		 current_username = req.body.username;
-		res.redirect('/realtorlogin')
-		
-		} ); 
+		 `, (err, result) => {
+			 current_realtorID = req.body.realtorID;
+			 current_username = req.body.username;
+			res.redirect('/realtorlogin')
+			
+			} ); 
+	
+	})
 	
 	
+	
+})
+
+router.get('/duper' , (req,res) => {
+	res.render('duper')
+})
+
+router.post('/duper' , (req,res) => {
+	if( req.body.action && req.body.action == 'try again' ){ 
+		  res.redirect('/realtorsignup')
+	}  
 })
 
 router.get('/realtorsignuperror' , (req,res) => { 
@@ -304,6 +341,7 @@ router.post('/realtorsignuperror' , (req,res) => {
 	} 
 	
 })
+ 
 
 router.get('/invalid', (req,res) => {
 	res.render('invalidlogin')
@@ -318,6 +356,8 @@ router.post('/invalid', (req,res) => {
 	}
 	
 })
+
+
  
 router.get('/login' , (req,res) => {
 	res.render('index')

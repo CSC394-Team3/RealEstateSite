@@ -18,8 +18,11 @@ html
 		}
 		
 		input[type=submit] {
-		  border-radius: 25px;
-		  
+		  border-radius: 25px; 
+		}
+		
+		a[type=submit] {
+			border-radius: 25px; 
 		}
 		
 	body
@@ -33,6 +36,7 @@ html
 				input(class="btn btn-md btn-success btn-block", type = "submit", name = "action" , value = "change email")  
 				input(class="btn btn-md btn-success btn-block", type = "submit", name = "action" , value = "change phone number") 
 				input(class="btn btn-md btn-success btn-block", type = "submit", name = "action" , value = "go to listings")
+				a(class="btn btn-md btn-success btn-block", type = "submit", name = "action", href ='/logout' ) log out
  
 				
  

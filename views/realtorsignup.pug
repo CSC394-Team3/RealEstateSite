@@ -19,7 +19,7 @@ html
 			display       : grid;
 			place-content : center;
 			min-height    : 100vh;
-			background-image: url("526370.jpg");
+			background-color: #cad297;
 		}
 		
 		input[type=text], input[type=password] {
@@ -62,46 +62,46 @@ html
 		
 	
 
-		span.h0s(style={color: 'white', 'font-size': '50px', 'tab-size': 12 }) Create your Willow Account:
+		span.h0s(style={color: 'black', 'font-size': '30px', 'tab-size': 12 }) <strong> Create your Willow Account:<strong>
 		
 		form(action = "/realtorsignup", method = "post") 
 			
 			
 			div.input
-				span.h1(style={color: 'white', 'font-size': '16px', 'tab-size': 12 }) <strong>Realtor ID<strong>
+				span.h1(style={color: 'black', 'font-size': '16px', 'tab-size': 12 }) <strong>Realtor ID<strong>
 				input(type = "text", name = "realtorID" )
 
 				
 			div.input
-				span.h2(style={color: 'white', 'font-size': '16px', 'tab-size': 12 }) <strong>Username<strong>
+				span.h2(style={color: 'black', 'font-size': '16px', 'tab-size': 12 }) <strong>Username<strong>
 				input(type = "text" , name = "username")
 				
 			div.input
-				span.h3(style={color: 'white', 'font-size': '16px', 'tab-size': 12 }) <strong>Password<strong>
+				span.h3(style={color: 'black', 'font-size': '16px', 'tab-size': 12 }) <strong>Password<strong>
 				input(type = "password", name = "password") 
 				
 			div.input
-				span.h4(style={color: 'white', 'font-size': '16px', 'tab-size': 12 }) <strong>Agency<strong>
+				span.h4(style={color: 'black', 'font-size': '16px', 'tab-size': 12 }) <strong>Agency<strong>
 				input(type = "text", name = "agency")
 			div.input
-				sspan.h5(style={color: 'white', 'font-size': '16px', 'tab-size': 12 }) <strong>First Name<strong>
+				sspan.h5(style={color: 'black', 'font-size': '16px', 'tab-size': 12 }) <strong>First Name<strong>
 				input(type = "text" , name = "firstName")
 				
 			div.input
-				span.h6(style={color: 'white', 'font-size': '16px', 'tab-size': 12 }) <strong>Last Name<strong>
+				span.h6(style={color: 'black', 'font-size': '16px', 'tab-size': 12 }) <strong>Last Name<strong>
 				input(type = "text" , name = "lastName")
 				
 			div.input  
-				span.h7(style={color: 'white', 'font-size': '16px', 'tab-size': 12 }) <strong>Phone Number<strong>
+				span.h7(style={color: 'black', 'font-size': '16px', 'tab-size': 12 }) <strong>Phone Number<strong>
 				input(type = "text" , name = "phoneno")
 				
 			div.input
-				span.h8(style={color: 'white', 'font-size': '16px', 'tab-size': 12 }) <strong>Email<strong>
+				span.h8(style={color: 'black', 'font-size': '16px', 'tab-size': 12 }) <strong>Email<strong>
 				input(type = "text" , name = "email")
 
 			div.input
-				span.h9(style={color: 'white', 'font-size': '16px', 'tab-size': 12 }) <strong>Accept Terms and Conditions<strong>
+				span.h9(style={color: 'black', 'font-size': '16px', 'tab-size': 12 }) <strong>Accept Terms and Conditions<strong>
 				input(type = "checkbox", name = "RealtorTerms", onclick="changeSubmit()")
 				
 			div.actions
-				input(class="btn btn-lg btn-primary btn-block", type = "submit", disabled= "true", id="submitButton", value = "done")
+				input(class="btn btn-lg btn-secondary btn-block", type = "submit", disabled= "true", id="submitButton", value = "done")

@@ -2,7 +2,7 @@
 .image_banner {
   background: url(willowcity_banner.jpeg);
   background-size: cover;
-  height: 500px ; 
+  height: 600px ; 
   background-position: 20% 100%;
   overflow: hidden;
 }
@@ -35,6 +35,7 @@
    left: 0;
    bottom: 0;
    width: 100%;
+   height: auto;
    background-color: #304d0b;
    color: white;
    text-align: center;
@@ -82,6 +83,7 @@
 }
 
 
+/* -----Test---- */
 
 
 /* Edit headings and paragraphs */

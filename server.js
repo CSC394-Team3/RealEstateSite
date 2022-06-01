@@ -791,7 +791,7 @@ router.post('/listingsc', (req,res) => {
 	}else if(req.body.action && req.body.action == 'Contact Us') {
 		 res.redirect('/contactus')
 	 }else if(req.body.action && req.body.action == 'Back to My Panel'){
-		res.redirect('/customerpanel')
+		res.redirect('/customerpanel')  
 	}
 })
 

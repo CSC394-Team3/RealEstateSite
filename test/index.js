@@ -121,7 +121,8 @@ describe('The express server', function() {
 				done();
 			});
 		});
-
+		 
+		 
 	it('it should not respond to PUT requests for the root path',
 	function(done) {
 		request(server)
@@ -132,7 +133,8 @@ describe('The express server', function() {
 			
 		});
 	});
-	
+	 
+		
 	it('should respond to valid POST requests for the root path, with a redirect',
 		function(done) {
 			request(server)
@@ -140,7 +142,10 @@ describe('The express server', function() {
 				.expect(302)
 				.expect('Location', '/')
 				.end(done);
-		}); 	
+		}); 
+		
+		
+		 
 		
 		after(function(done) {
 			

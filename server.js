@@ -1,29 +1,12 @@
 const express = require('express')
 const app = express()
-const bodyParser = require('body-parser');
-const port = process.env.PORT || 3000
+const bodyParser = require('body-parser'); 
 const router = express.Router();
 const path = require('path') 
 const pg = require('pg')
 const bcrypt = require('bcrypt') 
-const { body, validationResult } = require('express-validator');
-const methodOverride = require('method-override');
-app.use(methodOverride('_method'));
-
-  
-  
-  
-const http = require('http');
-const url = require('url');
-
-http
-  .createServer(function (req, res) {
-    const queryObject = url.parse(req.url, true).query;
-    console.log(queryObject);
-
-    res.writeHead(200, { 'Content-Type': 'text/html' }); 
-  })
-  .listen(8080);
+const { body, validationResult } = require('express-validator'); 
+   
 
 //Set location for accessing files
 app.use(express.static(path.join(__dirname, 'public')));
@@ -43,35 +26,31 @@ app.use(express.json())
 //for parsing application/xwww-
 app.use(bodyParser.urlencoded({ extended:true }));
 //form-urlencoded
-
+//Database
 const Pool = require('pg').Pool
 
-var connectionParams =  null;
-if (process.env.DATABASE_URL != null){
-    connectionParams = {
-        connectionString: process.env.DATABASE_URL,
-        ssl: { rejectUnauthorized: false }
-    } 
-}
-
-   else{
+var connectionParams = null;
+ 
+/* istanbul ignore if */
+if(process.env.DATABASE_URL != null) {
+   connectionParams = {
+	connectionString: process.env.DATABASE_URL,
+	ssl: {rejectUnauthorized: false }
+   } 
+} else{	
    connectionParams = {
 		user: 'team3_user',
       	host: 'localhost',
   	    database: 'team3',
 		password: 'team3pass',
-		port: 5432 
-	}
+		port: 5432
+
+  }
 }
 
-
-
 console.log(connectionParams)
-const pool = new pg.Client(connectionParams)
+const pool = new Pool(connectionParams)
 
-pool.connect(err => {
-    if (err) throw err; 
-});
  
 router.get('/', (req, res) => {
   res.render('index', { title: 'Willow' });
